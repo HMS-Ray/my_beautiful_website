@@ -1,15 +1,15 @@
 baseURL: https://weiguogreat2021.netlify.app/
 languageCode: en-us
-title: Wei Guo Profolio
+title: Wei Guo Portfolio
 theme: forty
 googleAnalytics: ''
 disqusShortname: ''
 params:
   banner:
     buttonText: Get Started
-    subtitle: |-
-      A RESPONSIVE SITE TEMPLATE DESIGNED BY HTML5 UP
-      AND RELEASED UNDER THE CREATIVE COMMONS.
+    # subtitle: |-
+    #   A RESPONSIVE SITE TEMPLATE DESIGNED BY HTML5 UP
+    #   AND RELEASED UNDER THE CREATIVE COMMONS.
     title: Hi, my name is Wei Guo
   blog: {}
   contact:
