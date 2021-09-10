@@ -83,7 +83,7 @@ params:
     showcase:
       - image: pic01.jpg
         subtitle: something about myself
-        title: pre programme
+        title: pre programme task
         url: blogs/weiguo
       - image: pic02.jpg
         subtitle: Feugiat Amet Tempus
