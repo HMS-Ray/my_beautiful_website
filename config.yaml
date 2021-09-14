@@ -108,11 +108,10 @@ params:
   two:
     buttonText: Get Started
     enable: yes
-    subtitle: "Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero.
-      \n    Mauris aliquet magna magna sed nunc rhoncus pharetra. \n    Pellentesque
-      condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia
-      pellentesque lorem ipsum dolor. \n    Nullam et orci eu lorem consequat tincidunt.
-      Vivamus et sagittis libero.\n    Mauris aliquet magna magna sed nunc rhoncus
-      amet pharetra et feugiat tempus."
-    title: Hello there
+    subtitle: "I would like to use this website to write down something I have been lusted to express.
+      \n It's a wonderful opportunity to let me clear up my mind and also let you know me better. \n    
+      All of words and analysis come from my own understanding so they're childish for sure. \n    
+      These are some of topics that I'm interested in. Hope I will have more in the future.
+      Time is a flat circle.\n May you have a good day and a good life."
+    title: Hello World
     url: blogs
