@@ -8,7 +8,7 @@ draft: false
 image: hello.jpg
 keywords: ""
 slug: weiguo
-title: pre programme task
+title: Biography
 ---
 
 ```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
@@ -28,7 +28,7 @@ library(janitor)
 
 Although Wei's bachelor education had no connection to data analytics, Wei discovered the value of data when he researched derivatives pricing and opted to master data analysis skills. Therefore, Wei learned python, R, and SQL himself via multiple platforms and you could see his past work at [here](https://github.com/HMS-Ray). 
 
-Wei appreciates your time and would like to give you a smile! ![smile](static/img/blogs/Smile.png)
+Wei appreciates your time and would like to give you a smile! ![smile](static/img/Smile.png)
 
 # Task 2: `gapminder` country comparison
 
