@@ -409,7 +409,7 @@ skim(footballer)</code></pre>
 <h1>Whoscored Rating</h1>
 <p>I always trust judgement from professional institutions and that’s why I will use rating data from whoscored at first because these people definitely know how to analyze performances better than me.</p>
 <p>These are Champions league rating results.
-<img src="/blogs/footballer_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" /></p>
+<img src="/blogs/footballer_files/figure-html/unnamed-chunk-1-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>And these are Domestic league rating results.
 <img src="/blogs/footballer_files/figure-html/unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>Conclusions seem to be quite straightforward. These guys prefer Messi rather than Ronaldo. We could see the confidence intervals of their ratings.</p>
@@ -480,7 +480,7 @@ Same conclusions apply to key stats without penalty goals. So my final decision 
 <h1>Scoring Machine</h1>
 <p>Both these two players are top scorers and leave us with many good memories of their unbelievable skills. Ronaldo scored a fantastic overhead goal in match against <a href="https://www.youtube.com/watch?v=BPgQTAJRzmw">Juventus</a> and Messi replicated Maradona’s magic in match against <a href="https://www.youtube.com/watch?v=mMiL4_1Yewg">Getafe</a> when he was only 19 years old.</p>
 <p>Therefore, we have to compare their scores data to see who is a better shooter that helps his team climb towards the glory. I compared the data by their age for fairness considerations and I also conducted a t test to analyze the difference between their means. Moreover, I focused on their goal scoring per 90 minutes data because total numbers of scores could be viewed as a <em>nominal variable</em> but we need a <em>real variable</em> when carrying out a comparison analysis.</p>
-<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-9-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
 <pre><code>## # A tibble: 2 × 5
 ##   name    mean_score median_score CI_low CI_high
 ##   &lt;chr&gt;        &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
@@ -550,7 +550,7 @@ Same conclusions apply to key stats without penalty goals. So my final decision 
 ##               0.48087               0.41146</code></pre>
 <p>The p-value once again suggests the difference is significant and the rate advantage is a 7%. We could conclude that <strong>Messi</strong> is a better chance catcher and has higher shoot accurancy.</p>
 <p>Finally, we want to see their penalty performance.</p>
-<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-16-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-16-1.png" width="960" style="display: block; margin: auto;" /></p>
 <pre><code>## # A tibble: 2 × 3
 ##   name    mean_pen sum_pen
 ##   &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;
@@ -568,15 +568,14 @@ Same conclusions apply to key stats without penalty goals. So my final decision 
 ## sample estimates:
 ##   mean in group Messi mean in group Ronaldo 
 ##               0.82616               0.85731</code></pre>
-<p>Two wonderful players couldn’t be differentiated by statistics but ronaldo does have a higher mean success rate. So in conclusion, Messi does score more goals per 90 mins and has better shooting skills but Ronaldo also seems to have a stronger mentality when faced with difficulty. Messi 2:1 Ronaldo.</p>
-<pre class="r"><code>footballer %&gt;% filter(age&gt;=21 &amp; age&lt;=32,season!=&quot;2021-2022&quot;) %&gt;% 
-  group_by(name,age) %&gt;% 
-  mutate(total_assists=90*sum(assist)/sum(minutes)) %&gt;% select(name,age,total_assists) %&gt;% unique() %&gt;% ggplot(aes(x=age,y=total_assists,color=name))+geom_point()+geom_smooth(se=FALSE)+theme_bw()</code></pre>
-<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-19-1.png" width="648" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>assist_machine&lt;-footballer %&gt;% filter(age&gt;=21 &amp; age&lt;=32,season!=&quot;2021-2022&quot;) %&gt;% 
-  group_by(name,age) %&gt;% 
-  mutate(total_assists=90*sum(assist)/sum(minutes)) %&gt;% select(name,age,total_assists) %&gt;% unique()
-t.test(total_assists ~ name, data=assist_machine)</code></pre>
+<p>Two wonderful players couldn’t be differentiated by statistics but ronaldo does have a higher mean success rate. In conclusion, Messi does score more goals per 90 mins and has better shooting skills but Ronaldo also seems to have a stronger mentality when faced with difficulty. So I guess Messi 2:1 Ronaldo would be fair.</p>
+</div>
+<div id="assist-master" class="section level1">
+<h1>Assist master</h1>
+<p>More people tend to call Messi more of a team player and Ronaldo more of a solo player. In his time at FC Barcelona, Messi is the man who navigates the style this team plays and he made perfect connections with teammates like Xavi and Iniesta. FC Barcelona under Pep Guardiola is a formidable opponent that no team wants to face. They played more like a whole and achieved many things that no one could reach later. Ronaldo on the other hand, is always the man who stands out for his team when it needs a goal to turn the game. In champions league season 15/16, Real Madrid was beaten by Wolfsburg in the 0-2 first leg. Ronaldo scored two goals for Real Madrid in the second leg before seized the win by scoring an outrageous freekick and completed his hat trick. Real Madrid marched to the final and won the title of champions league later that season.</p>
+<p>Like how I analyzed two players’ shooting performance, first I created a graph to see how many assists they have made at each age.</p>
+<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-19-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>As shown in the graph, Messi dominates Ronaldo on assists performance and Ronaldo only beat Messi for one time during the golden time of their careers. I did a follow-up t-test to bolster my argument.</p>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -588,47 +587,8 @@ t.test(total_assists ~ name, data=assist_machine)</code></pre>
 ## sample estimates:
 ##   mean in group Messi mean in group Ronaldo 
 ##               0.39908               0.28059</code></pre>
-<pre class="r"><code>pass_master&lt;-footballer %&gt;% filter(!is.na(pass),season!=&quot;2021-2022&quot;) %&gt;% 
-  group_by(name,season)%&gt;% 
-  mutate(total_pass_success=acclb+accsp) %&gt;% 
-  mutate(total_pass_success=sum(total_pass_success),total_pass=sum(pass))%&gt;%
-  mutate(pass_success_rate=total_pass_success/total_pass) %&gt;% 
-  select(season,name,pass_success_rate) %&gt;% unique()
-t.test(pass_success_rate ~ name, data= pass_master)</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  pass_success_rate by name
-## t = 3.1, df = 21.9, p-value = 0.0052
-## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
-## 95 percent confidence interval:
-##  0.0090564 0.0456554
-## sample estimates:
-##   mean in group Messi mean in group Ronaldo 
-##               0.83905               0.81170</code></pre>
-<pre class="r"><code>key_pass_master&lt;-footballer %&gt;% filter(!is.na(pass),season!=&quot;2021-2022&quot;) %&gt;% 
-  group_by(name,season)%&gt;% 
-  mutate(total_key_pass=sum(keypass),total_pass=sum(pass))%&gt;%
-  mutate(keypass_success_rate=total_key_pass/total_pass) %&gt;% 
-  select(season,name,keypass_success_rate) %&gt;% unique()
-t.test(keypass_success_rate ~ name, data= key_pass_master)</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  keypass_success_rate by name
-## t = -2.97, df = 22, p-value = 0.007
-## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
-## 95 percent confidence interval:
-##  -0.0151619 -0.0027057
-## sample estimates:
-##   mean in group Messi mean in group Ronaldo 
-##              0.040237              0.049171</code></pre>
-<pre class="r"><code>assist_master&lt;-footballer %&gt;% filter(!is.na(pass),season!=&quot;2021-2022&quot;) %&gt;% 
-  group_by(name,season)%&gt;% 
-  mutate(total_assist=sum(assist),total_pass=sum(pass))%&gt;%
-  mutate(assist_success_rate=total_assist/total_pass) %&gt;% 
-  select(season,name,assist_success_rate) %&gt;% unique()
-t.test(assist_success_rate ~ name, data= assist_master)</code></pre>
+<p>Results support my last argument. Messi makes 0.1 more assists than Ronaldo per 90 minutes. However, one of the feasible explanations is that since Messi plays as the core of his team, he controls ball most of the time and which allows him to make more passes and finally thus transferring into more assists. Therefore, I divide their assists by their total passes each season and conduct a t-test to analyze difference between their means.</p>
+<p>T-test on assist success rate:</p>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -640,4 +600,35 @@ t.test(assist_success_rate ~ name, data= assist_master)</code></pre>
 ## sample estimates:
 ##   mean in group Messi mean in group Ronaldo 
 ##             0.0063457             0.0077800</code></pre>
+<p>Unexpectedly, there is no significant difference between their assist capabilities. So instead I tried to find if there is any difference in their pass success rate and key pass success rate for using as a substitute of their capacity. Because some Ronaldo fans could argue that Messi makes more safe passes by following the method of Tiki-taka. That’s why I also analyzed the value of their mean key pass success rate.</p>
+<p>T-test on pass success rate:</p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  pass_success_rate by name
+## t = 3.1, df = 21.9, p-value = 0.0052
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  0.0090564 0.0456554
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##               0.83905               0.81170</code></pre>
+<p>T-test on key pass success rate:</p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  keypass_success_rate by name
+## t = -2.97, df = 22, p-value = 0.007
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  -0.0151619 -0.0027057
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##              0.040237              0.049171</code></pre>
+<p>The results are once again even for those two. Messi enjoys a higher pass success rate by near 3 percent but Ronaldo has a 1 percent advantage on key pass success rate. It somewhat supports the hypothesis that Messi makes more not that important passes when organized gradual attack and Ronaldo waits his chance to pull the trigger when decisive like a sniper. Therefore, Messi 3:2 Ronaldo.</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>People are lucky to enjoy football in an era dominated by these two incredible players. They both work hard to fight for their dreams and have given us so many unforgettable moments when football hasn’t been flooded by capital. It’s hard to decide which of them is better since they are still on their journey. Hope they could suprise us.</p>
+<p><img src="/img/friendship.jpeg" width="100%" style="display: block; margin: auto;" /></p>
 </div>

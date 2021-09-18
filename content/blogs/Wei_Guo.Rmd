@@ -28,7 +28,11 @@ library(janitor)
 
 Although Wei's bachelor education had no connection to data analytics, Wei discovered the value of data when he researched derivatives pricing and opted to master data analysis skills. Therefore, Wei learned python, R, and SQL himself via multiple platforms and you could see his past work at [here](https://github.com/HMS-Ray). 
 
-Wei appreciates your time and would like to give you a smile! ![smile](static/img/Smile.png)
+Wei appreciates your time and would like to give you a smile!
+
+```{r smile,echo=FALSE,out.width="60%"}
+knitr::include_graphics("/img/Smile.png",error=FALSE)
+```
 
 # Task 2: `gapminder` country comparison
 

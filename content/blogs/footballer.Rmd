@@ -21,7 +21,7 @@ options(digits = 5)
 
 # default figure size
 knitr::opts_chunk$set(
-  fig.width=6.75, 
+  fig.width=10, 
   fig.height=6.75,
   fig.align = "center"
 )
@@ -331,24 +331,52 @@ penalty_master<-footballer %>% filter(penalty_attempt!=0,season!="2021-2022") %>
 t.test(penalty_success_rate ~ name, data= penalty_master)
 ```
 
-Two wonderful players couldn't be differentiated by statistics but ronaldo does have a higher mean success rate. So in conclusion, Messi does score more goals per 90 mins and has better shooting skills but Ronaldo also seems to have a stronger mentality when faced with difficulty. Messi 2:1 Ronaldo.
+Two wonderful players couldn't be differentiated by statistics but ronaldo does have a higher mean success rate. In conclusion, Messi does score more goals per 90 mins and has better shooting skills but Ronaldo also seems to have a stronger mentality when faced with difficulty. So I guess Messi 2:1 Ronaldo would be fair.
 
+# Assist master
 
+More people tend to call Messi more of a team player and Ronaldo more of a solo player. In his time at FC Barcelona, Messi is the man who navigates the style this team plays and he made perfect connections with teammates like Xavi and Iniesta. FC Barcelona under Pep Guardiola is a formidable opponent that no team wants to face. They played more like a whole and achieved many things that no one could reach later. Ronaldo on the other hand, is always the man who stands out for his team when it needs a goal to turn the game. In champions league season 15/16, Real Madrid was beaten by Wolfsburg in the 0-2 first leg. Ronaldo scored two goals for Real Madrid in the second leg before seized the win by scoring an outrageous freekick and completed his hat trick. Real Madrid marched to the final and won the title of champions league later that season.
 
-```{r}
+Like how I analyzed two players' shooting performance, first I created a graph to see how many assists they have made at each age.
+
+```{r,echo=FALSE}
 footballer %>% filter(age>=21 & age<=32,season!="2021-2022") %>% 
   group_by(name,age) %>% 
-  mutate(total_assists=90*sum(assist)/sum(minutes)) %>% select(name,age,total_assists) %>% unique() %>% ggplot(aes(x=age,y=total_assists,color=name))+geom_point()+geom_smooth(se=FALSE)+theme_bw()
+  mutate(total_assists=90*sum(assist)/sum(minutes)) %>% select(name,age,total_assists) %>% 
+  unique() %>% 
+  ggplot(aes(x=age,y=total_assists,color=name))+geom_point()+geom_smooth(se=FALSE)+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=20,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=15))+
+  labs(title="Assists data analysis by age",
+       x="Age",
+       y="Assists per 90mins",
+       color="Players")
 ```
 
-```{r}
+As shown in the graph, Messi dominates Ronaldo on assists performance and Ronaldo only beat Messi for one time during the golden time of their careers. I did a follow-up t-test to bolster my argument.
+
+```{r,echo=FALSE}
 assist_machine<-footballer %>% filter(age>=21 & age<=32,season!="2021-2022") %>% 
   group_by(name,age) %>% 
   mutate(total_assists=90*sum(assist)/sum(minutes)) %>% select(name,age,total_assists) %>% unique()
 t.test(total_assists ~ name, data=assist_machine)
 ```
 
-```{r}
+Results support my last argument. Messi makes 0.1 more assists than Ronaldo per 90 minutes. However, one of the feasible explanations is that since Messi plays as the core of his team, he controls ball most of the time and which allows him to make more passes and finally thus transferring into more assists. Therefore, I divide their assists by their total passes each season and conduct a t-test to analyze difference between their means.
+
+T-test on assist success rate:
+```{r,echo=FALSE}
+assist_master<-footballer %>% filter(!is.na(pass),season!="2021-2022") %>% 
+  group_by(name,season)%>% 
+  mutate(total_assist=sum(assist),total_pass=sum(pass))%>%
+  mutate(assist_success_rate=total_assist/total_pass) %>% 
+  select(season,name,assist_success_rate) %>% unique()
+t.test(assist_success_rate ~ name, data= assist_master)
+```
+
+Unexpectedly, there is no significant difference between their assist capabilities. So instead I tried to find if there is any difference in their pass success rate and key pass success rate for using as a substitute of their capacity. Because some Ronaldo fans could argue that Messi makes more safe passes by following the method of Tiki-taka. That's why I also analyzed the value of their mean key pass success rate.
+
+T-test on pass success rate:
+```{r,echo=FALSE}
 pass_master<-footballer %>% filter(!is.na(pass),season!="2021-2022") %>% 
   group_by(name,season)%>% 
   mutate(total_pass_success=acclb+accsp) %>% 
@@ -358,7 +386,8 @@ pass_master<-footballer %>% filter(!is.na(pass),season!="2021-2022") %>%
 t.test(pass_success_rate ~ name, data= pass_master)
 ```
 
-```{r}
+T-test on key pass success rate:
+```{r,echo=FALSE}
 key_pass_master<-footballer %>% filter(!is.na(pass),season!="2021-2022") %>% 
   group_by(name,season)%>% 
   mutate(total_key_pass=sum(keypass),total_pass=sum(pass))%>%
@@ -367,11 +396,13 @@ key_pass_master<-footballer %>% filter(!is.na(pass),season!="2021-2022") %>%
 t.test(keypass_success_rate ~ name, data= key_pass_master)
 ```
 
-```{r}
-assist_master<-footballer %>% filter(!is.na(pass),season!="2021-2022") %>% 
-  group_by(name,season)%>% 
-  mutate(total_assist=sum(assist),total_pass=sum(pass))%>%
-  mutate(assist_success_rate=total_assist/total_pass) %>% 
-  select(season,name,assist_success_rate) %>% unique()
-t.test(assist_success_rate ~ name, data= assist_master)
+The results are once again even for those two. Messi enjoys a higher pass success rate by near 3 percent but Ronaldo has a 1 percent advantage on key pass success rate. It somewhat supports the hypothesis that Messi makes more not that important passes when organized gradual attack and Ronaldo waits his chance to pull the trigger when decisive like a sniper. Therefore, Messi 3:2 Ronaldo. 
+
+# Conclusion
+
+People are lucky to enjoy football in an era dominated by these two incredible players. They both work hard to fight for their dreams and have given us so many unforgettable moments when football hasn't been flooded by capital. It's hard to decide which of them is better since they are still on their journey. Hope they could suprise us. 
+
+```{r smile,echo=FALSE,out.width="100%"}
+knitr::include_graphics("/img/friendship.jpeg",error=FALSE)
 ```
+
