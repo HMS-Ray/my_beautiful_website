@@ -400,7 +400,7 @@ The results are once again even for those two. Messi enjoys a higher pass succes
 
 # Conclusion
 
-People are lucky to enjoy football in an era dominated by these two incredible players. They both work hard to fight for their dreams and have given us so many unforgettable moments when football hasn't been flooded by capital. It's hard to decide which of them is better since they are still on their journey. Hope they could suprise us. 
+People are lucky to enjoy football in an era dominated by these two incredible players. They both work hard to fight for their dreams and have given us so many unforgettable moments when football hasn't been flooded by capital. It's hard to decide which of them is better since they are still on their journey. Hope they could bring us more  in their last dance. 
 
 ```{r smile,echo=FALSE,out.width="100%"}
 knitr::include_graphics("/img/friendship.jpeg",error=FALSE)
