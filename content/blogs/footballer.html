@@ -1,0 +1,643 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T21:28:43-05:00"
+description: Messi vs Ronaldo
+draft: false
+image: footballer.jpeg
+keywords: ""
+slug: footballer
+title: Head to head
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="messi-vs-ronaldo" class="section level2">
+<h2>Messi vs Ronaldo</h2>
+<p>You couldn’t avoid being asked this question if you happen to be a football fan —— “Who is better in your mind? Lionel Messi or Cristiano Ronaldo?”, even if you are one of those successful professional defenders <a href="https://www.youtube.com/watch?v=qUHDYu_zndE">&lt;watch it&gt;</a>. However, being biased could be easy for these players if one of them used to play with Messi or Ronaldo. As a result, although I regard both those two players as the best duo in my time, I will use cold data to compare their past performance in matches.</p>
+</div>
+<div id="see-the-dataset" class="section level1">
+<h1>See the dataset</h1>
+<pre class="r"><code>#Loading the footballers dataset
+footballer &lt;- read_csv(here::here(&quot;data&quot;, &quot;footballer.csv&quot;)) %&gt;% 
+  janitor::clean_names() 
+#Have a look of the dataset
+skim(footballer)</code></pre>
+<table>
+<caption>(#tab:load_footballer_data)Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">footballer</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">75</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">24</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">20</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">season</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">19</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">name</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">squad</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">8</td>
+<td align="right">14</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">competition</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">14</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">age</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">26.40</td>
+<td align="right">5.51</td>
+<td align="right">17.00</td>
+<td align="right">22.00</td>
+<td align="right">26.00</td>
+<td align="right">31.00</td>
+<td align="right">36.0</td>
+<td align="left">▇▇▇▇▆</td>
+</tr>
+<tr class="even">
+<td align="left">minutes</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1574.60</td>
+<td align="right">1073.12</td>
+<td align="right">25.00</td>
+<td align="right">719.50</td>
+<td align="right">1080.00</td>
+<td align="right">2714.50</td>
+<td align="right">3375.0</td>
+<td align="left">▆▇▁▃▇</td>
+</tr>
+<tr class="odd">
+<td align="left">goal</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">16.09</td>
+<td align="right">14.11</td>
+<td align="right">0.00</td>
+<td align="right">5.00</td>
+<td align="right">11.00</td>
+<td align="right">27.00</td>
+<td align="right">50.0</td>
+<td align="left">▇▂▂▂▁</td>
+</tr>
+<tr class="even">
+<td align="left">assist</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">5.45</td>
+<td align="right">5.17</td>
+<td align="right">0.00</td>
+<td align="right">2.00</td>
+<td align="right">4.00</td>
+<td align="right">9.00</td>
+<td align="right">21.0</td>
+<td align="left">▇▃▂▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">non_penalty</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">13.55</td>
+<td align="right">11.78</td>
+<td align="right">0.00</td>
+<td align="right">4.50</td>
+<td align="right">10.00</td>
+<td align="right">22.50</td>
+<td align="right">42.0</td>
+<td align="left">▇▃▂▂▁</td>
+</tr>
+<tr class="even">
+<td align="left">penalty</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2.55</td>
+<td align="right">2.98</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">2.00</td>
+<td align="right">4.00</td>
+<td align="right">12.0</td>
+<td align="left">▇▃▂▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">penalty_attempt</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2.99</td>
+<td align="right">3.43</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">2.00</td>
+<td align="right">5.00</td>
+<td align="right">13.0</td>
+<td align="left">▇▃▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">shoot</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">111.94</td>
+<td align="right">78.81</td>
+<td align="right">0.00</td>
+<td align="right">41.00</td>
+<td align="right">81.00</td>
+<td align="right">178.00</td>
+<td align="right">264.0</td>
+<td align="left">▇▆▂▇▃</td>
+</tr>
+<tr class="odd">
+<td align="left">off_target</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">35.87</td>
+<td align="right">27.34</td>
+<td align="right">0.00</td>
+<td align="right">12.00</td>
+<td align="right">28.00</td>
+<td align="right">53.00</td>
+<td align="right">104.0</td>
+<td align="left">▇▅▅▃▁</td>
+</tr>
+<tr class="even">
+<td align="left">on_target</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">49.66</td>
+<td align="right">35.20</td>
+<td align="right">0.00</td>
+<td align="right">20.00</td>
+<td align="right">35.00</td>
+<td align="right">80.00</td>
+<td align="right">105.0</td>
+<td align="left">▇▇▁▅▇</td>
+</tr>
+<tr class="odd">
+<td align="left">blocked</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">26.42</td>
+<td align="right">18.75</td>
+<td align="right">0.00</td>
+<td align="right">11.00</td>
+<td align="right">24.00</td>
+<td align="right">43.00</td>
+<td align="right">66.0</td>
+<td align="left">▇▃▃▅▂</td>
+</tr>
+<tr class="even">
+<td align="left">rating</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">8.16</td>
+<td align="right">0.61</td>
+<td align="right">5.98</td>
+<td align="right">7.87</td>
+<td align="right">8.34</td>
+<td align="right">8.54</td>
+<td align="right">8.9</td>
+<td align="left">▁▁▂▅▇</td>
+</tr>
+<tr class="odd">
+<td align="left">pass</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">895.38</td>
+<td align="right">667.52</td>
+<td align="right">13.00</td>
+<td align="right">409.00</td>
+<td align="right">732.00</td>
+<td align="right">1253.00</td>
+<td align="right">2360.0</td>
+<td align="left">▇▅▅▂▂</td>
+</tr>
+<tr class="even">
+<td align="left">acclb</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">27.06</td>
+<td align="right">30.20</td>
+<td align="right">0.00</td>
+<td align="right">6.00</td>
+<td align="right">17.00</td>
+<td align="right">34.00</td>
+<td align="right">117.0</td>
+<td align="left">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">inacclb</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">10.17</td>
+<td align="right">12.09</td>
+<td align="right">0.00</td>
+<td align="right">2.00</td>
+<td align="right">7.00</td>
+<td align="right">11.00</td>
+<td align="right">45.0</td>
+<td align="left">▇▂▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">accsp</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">715.43</td>
+<td align="right">531.21</td>
+<td align="right">8.00</td>
+<td align="right">334.00</td>
+<td align="right">584.00</td>
+<td align="right">994.00</td>
+<td align="right">1936.0</td>
+<td align="left">▇▃▃▂▂</td>
+</tr>
+<tr class="odd">
+<td align="left">inaccsp</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">142.72</td>
+<td align="right">106.26</td>
+<td align="right">1.00</td>
+<td align="right">59.00</td>
+<td align="right">100.00</td>
+<td align="right">220.00</td>
+<td align="right">356.0</td>
+<td align="left">▇▆▃▂▃</td>
+</tr>
+<tr class="even">
+<td align="left">keypass</td>
+<td align="right">22</td>
+<td align="right">0.71</td>
+<td align="right">38.64</td>
+<td align="right">28.93</td>
+<td align="right">0.00</td>
+<td align="right">17.00</td>
+<td align="right">27.00</td>
+<td align="right">65.00</td>
+<td align="right">95.0</td>
+<td align="left">▇▆▂▃▃</td>
+</tr>
+<tr class="odd">
+<td align="left">yellow</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2.09</td>
+<td align="right">1.96</td>
+<td align="right">0.00</td>
+<td align="right">1.00</td>
+<td align="right">2.00</td>
+<td align="right">3.00</td>
+<td align="right">9.0</td>
+<td align="left">▇▆▂▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">red</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">0.12</td>
+<td align="right">0.37</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">2.0</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+<p>As you could see, I have a dataset covering 10+ key factors for judging players’ performances. I have the data for champions league and domestic leagues they have played in. I also have data about their goals, assists, shooting and passing, even how many yellow and red cards they were given respectively. As you could see, there are 22 missing values in several variables because the website I used to download data didn’t have the data before 2009-2010 season. Besides, I would like to give you some explanations on what <em>acclb</em>, <em>inacclb</em>, <em>accsp</em>, and <em>inaccsp</em> are. The first two mean how many accurate and inaccurate long ball passes they had made and the last two mean how many accurate and inaccurate short passes they had made.</p>
+</div>
+<div id="whoscored-rating" class="section level1">
+<h1>Whoscored Rating</h1>
+<p>I always trust judgement from professional institutions and that’s why I will use rating data from whoscored at first because these people definitely know how to analyze performances better than me.</p>
+<p>These are Champions league rating results.
+<img src="/blogs/footballer_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>And these are Domestic league rating results.
+<img src="/blogs/footballer_files/figure-html/unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>Conclusions seem to be quite straightforward. These guys prefer Messi rather than Ronaldo. We could see the confidence intervals of their ratings.</p>
+<p>Champions League confidence intervals and t-test results:</p>
+<pre><code>## # A tibble: 2 × 5
+##   name    mean_rating median_rating CI_low CI_high
+##   &lt;chr&gt;         &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Messi          8.45          8.40   8.22    8.68
+## 2 Ronaldo        7.97          7.91   7.72    8.22</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  rating by name
+## t = 3.15, df = 21.8, p-value = 0.0047
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  0.16575 0.80425
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##                8.4508                7.9658</code></pre>
+<p>Undoubtedly, Messi enjoys higher mean scores than Ronaldo and their intervals even don’t overlap. P value is less than 0.01 so Messi’s mean champions league rating is statistically significantly larger than Ronaldo’s.</p>
+<p>Domestic League confidence intervals and t-test results:</p>
+<pre><code>## # A tibble: 2 × 5
+##   name    mean_rating median_rating CI_low CI_high
+##   &lt;chr&gt;         &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Messi          8.45          8.40   8.22    8.68
+## 2 Ronaldo        7.97          7.91   7.72    8.22</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  rating by name
+## t = 5.3, df = 16.8, p-value = 6.2e-05
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  0.34676 0.80657
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##                8.6367                8.0600</code></pre>
+<p>Once again, Ronaldo loses both fights and some of Ronaldo fans may say that these are unprofessional and trash ratings thus couldn’t be taken seriously. In order to test their argument, I did a correlation test between rating and players’ key stats (goals+assists) of each season.</p>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  x and y
+## t = 3.03, df = 22, p-value = 0.0061
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.17860 0.77628
+## sample estimates:
+##     cor 
+## 0.54288</code></pre>
+<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-7-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>P value suggest that the correlation between them is significant and Messi’s slope is surprisingly lower than that of Ronaldo. In other words, Messi’s rating could be higher if given the same increase on rating of every key stats improvement. So Ronaldo fans’ claim doesn’t have its ground.</p>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  x and y
+## t = 2.56, df = 22, p-value = 0.018
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.094028 0.739650
+## sample estimates:
+##     cor 
+## 0.47925</code></pre>
+<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;" />
+Same conclusions apply to key stats without penalty goals. So my final decision is that Messi wins the first round. Messi 1:0 Ronaldo.</p>
+</div>
+<div id="scoring-machine" class="section level1">
+<h1>Scoring Machine</h1>
+<p>Both these two players are top scorers and leave us with many good memories of their unbelievable skills. Ronaldo scored a fantastic overhead goal in match against <a href="https://www.youtube.com/watch?v=BPgQTAJRzmw">Juventus</a> and Messi replicated Maradona’s magic in match against <a href="https://www.youtube.com/watch?v=mMiL4_1Yewg">Getafe</a> when he was only 19 years old.</p>
+<p>Therefore, we have to compare their scores data to see who is a better shooter that helps his team climb towards the glory. I compared the data by their age for fairness considerations and I also conducted a t test to analyze the difference between their means. Moreover, I focused on their goal scoring per 90 minutes data because total numbers of scores could be viewed as a <em>nominal variable</em> but we need a <em>real variable</em> when carrying out a comparison analysis.</p>
+<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-9-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre><code>## # A tibble: 2 × 5
+##   name    mean_score median_score CI_low CI_high
+##   &lt;chr&gt;        &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Messi        0.917        0.929  0.798   1.04 
+## 2 Ronaldo      0.813        0.884  0.688   0.938</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  total_scores by name
+## t = 1.33, df = 21.9, p-value = 0.2
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  -0.058419  0.267382
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##               0.91726               0.81278</code></pre>
+<p>As you could see from the graph, Messi scored more per 90 minutes in early years than Ronaldo but the latter one gradually caught up with Messi and surpassed him mildly after the age of 26. Meanwhile, t test results also show that there isn’t any significant difference between their mean scores. I did two more t tests on different age periods and you could see that Messi leaded first before lagged behind Ronaldo.</p>
+<p>Early age:</p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  total_scores by name
+## t = 1.95, df = 9.84, p-value = 0.081
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  -0.035639  0.520868
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##               0.95570               0.71309</code></pre>
+<p>Old age:</p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  total_scores by name
+## t = -0.401, df = 7.52, p-value = 0.7
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  -0.22943  0.16213
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##               0.87882               0.91247</code></pre>
+<p>However, I realized that we could go deeper into this question because they had different numbers of shooting chances. Consequently, we could decide who is a better scorer by comparing their score-shoot rate. Some meddlesome Messi fans also called Ronaldo as Penaldo because he only scored penalties. So we are also going to analyze who keeps his composure better at 12 yards opportunities.</p>
+<p>Shooting transferring rate t-test analysis:</p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  shoot_transfer_rate by name
+## t = 4.01, df = 16.3, p-value = 0.00097
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  0.022064 0.071327
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##               0.17086               0.12417</code></pre>
+<p>Couldn’t say who wins. Although the difference is significant, Messi only has a 5% rate advantage compared with Ronaldo. Therefore, we checked the difference between the mean of their on target rate.</p>
+<p>Shoot on target rate t-test analysis:</p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  target_rate by name
+## t = 5.28, df = 21.7, p-value = 2.8e-05
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  0.042103 0.096706
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##               0.48087               0.41146</code></pre>
+<p>The p-value once again suggests the difference is significant and the rate advantage is a 7%. We could conclude that <strong>Messi</strong> is a better chance catcher and has higher shoot accurancy.</p>
+<p>Finally, we want to see their penalty performance.</p>
+<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-16-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre><code>## # A tibble: 2 × 3
+##   name    mean_pen sum_pen
+##   &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Messi       4.53      77
+## 2 Ronaldo     6.33     114</code></pre>
+<p>Ronaldo do score more penalties but hey, scoring penalties needs a big heart and not everyone could make it when is forced to kick under pressure. So instead of concentrating on the numbers of penalties, I wanted to see who has a higher penalty success rate and did a t test as the supplement.</p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  penalty_success_rate by name
+## t = -0.638, df = 19.9, p-value = 0.53
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  -0.132994  0.070689
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##               0.82616               0.85731</code></pre>
+<p>Two wonderful players couldn’t be differentiated by statistics but ronaldo does have a higher mean success rate. So in conclusion, Messi does score more goals per 90 mins and has better shooting skills but Ronaldo also seems to have a stronger mentality when faced with difficulty. Messi 2:1 Ronaldo.</p>
+<pre class="r"><code>footballer %&gt;% filter(age&gt;=21 &amp; age&lt;=32,season!=&quot;2021-2022&quot;) %&gt;% 
+  group_by(name,age) %&gt;% 
+  mutate(total_assists=90*sum(assist)/sum(minutes)) %&gt;% select(name,age,total_assists) %&gt;% unique() %&gt;% ggplot(aes(x=age,y=total_assists,color=name))+geom_point()+geom_smooth(se=FALSE)+theme_bw()</code></pre>
+<p><img src="/blogs/footballer_files/figure-html/unnamed-chunk-19-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>assist_machine&lt;-footballer %&gt;% filter(age&gt;=21 &amp; age&lt;=32,season!=&quot;2021-2022&quot;) %&gt;% 
+  group_by(name,age) %&gt;% 
+  mutate(total_assists=90*sum(assist)/sum(minutes)) %&gt;% select(name,age,total_assists) %&gt;% unique()
+t.test(total_assists ~ name, data=assist_machine)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  total_assists by name
+## t = 3.11, df = 19.1, p-value = 0.0058
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  0.038666 0.198326
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##               0.39908               0.28059</code></pre>
+<pre class="r"><code>pass_master&lt;-footballer %&gt;% filter(!is.na(pass),season!=&quot;2021-2022&quot;) %&gt;% 
+  group_by(name,season)%&gt;% 
+  mutate(total_pass_success=acclb+accsp) %&gt;% 
+  mutate(total_pass_success=sum(total_pass_success),total_pass=sum(pass))%&gt;%
+  mutate(pass_success_rate=total_pass_success/total_pass) %&gt;% 
+  select(season,name,pass_success_rate) %&gt;% unique()
+t.test(pass_success_rate ~ name, data= pass_master)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  pass_success_rate by name
+## t = 3.1, df = 21.9, p-value = 0.0052
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  0.0090564 0.0456554
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##               0.83905               0.81170</code></pre>
+<pre class="r"><code>key_pass_master&lt;-footballer %&gt;% filter(!is.na(pass),season!=&quot;2021-2022&quot;) %&gt;% 
+  group_by(name,season)%&gt;% 
+  mutate(total_key_pass=sum(keypass),total_pass=sum(pass))%&gt;%
+  mutate(keypass_success_rate=total_key_pass/total_pass) %&gt;% 
+  select(season,name,keypass_success_rate) %&gt;% unique()
+t.test(keypass_success_rate ~ name, data= key_pass_master)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  keypass_success_rate by name
+## t = -2.97, df = 22, p-value = 0.007
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  -0.0151619 -0.0027057
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##              0.040237              0.049171</code></pre>
+<pre class="r"><code>assist_master&lt;-footballer %&gt;% filter(!is.na(pass),season!=&quot;2021-2022&quot;) %&gt;% 
+  group_by(name,season)%&gt;% 
+  mutate(total_assist=sum(assist),total_pass=sum(pass))%&gt;%
+  mutate(assist_success_rate=total_assist/total_pass) %&gt;% 
+  select(season,name,assist_success_rate) %&gt;% unique()
+t.test(assist_success_rate ~ name, data= assist_master)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  assist_success_rate by name
+## t = -1.57, df = 18.2, p-value = 0.13
+## alternative hypothesis: true difference in means between group Messi and group Ronaldo is not equal to 0
+## 95 percent confidence interval:
+##  -0.00334866  0.00047996
+## sample estimates:
+##   mean in group Messi mean in group Ronaldo 
+##             0.0063457             0.0077800</code></pre>
+</div>

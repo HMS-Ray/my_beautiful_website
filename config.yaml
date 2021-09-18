@@ -104,7 +104,7 @@ params:
       - image: football.jpeg
         subtitle: Who is better
         title: Messi and Cristiano Ronaldo
-        url: blogs/ipsum
+        url: blogs/footballer
   two:
     buttonText: Get Started
     enable: yes

@@ -1,0 +1,377 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T21:28:43-05:00"
+description: Messi vs Ronaldo
+draft: false
+image: footballer.jpeg
+keywords: ""
+slug: footballer
+title: Head to head
+---
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 5)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+```{r load-libraries, include=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(httr)
+library(readxl)
+library(vroom)
+library(googlesheets4)
+library(tidyverse)
+library(janitor) 
+library(skimr)
+library(countrycode) # to clean up country names
+library(broom)
+library(car)
+library(ggfortify)
+library(stringr)
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+```
+
+## Messi vs Ronaldo
+
+You couldn't avoid being asked this question if you happen to be a football fan —— "Who is better in your mind? Lionel Messi or Cristiano Ronaldo?", even if you are one of those successful professional defenders [\<watch it\>](https://www.youtube.com/watch?v=qUHDYu_zndE). However, being biased could be easy for these players if one of them used to play with Messi or Ronaldo. As a result, although I regard both those two players as the best duo in my time, I will use cold data to compare their past performance in matches.
+
+# See the dataset
+
+```{r, load_footballer_data}
+#Loading the footballers dataset
+footballer <- read_csv(here::here("data", "footballer.csv")) %>% 
+  janitor::clean_names() 
+#Have a look of the dataset
+skim(footballer)
+```
+
+As you could see, I have a dataset covering 10+ key factors for judging players' performances. I have the data for champions league and domestic leagues they have played in. I also have data about their goals, assists, shooting and passing, even how many yellow and red cards they were given respectively. As you could see, there are 22 missing values in several variables because the website I used to download data didn't have the data before 2009-2010 season. Besides, I would like to give you some explanations on what *acclb*, *inacclb*, *accsp*, and *inaccsp* are. The first two mean how many accurate and inaccurate long ball passes they had made and the last two mean how many accurate and inaccurate short passes they had made.
+
+# Whoscored Rating
+
+I always trust judgement from professional institutions and that's why I will use rating data from whoscored at first because these people definitely know how to analyze performances better than me.
+
+These are Champions league rating results.
+```{r,echo=FALSE}
+footballer %>% filter(competition=="Champions Lg",!is.na(rating),season!="2021-2022") %>% 
+  group_by(name) %>% 
+  select(season,name,rating) %>% ggplot(aes(x=season,y=rating,color=name))+
+  geom_point()+
+  geom_smooth(aes(group=1),se=FALSE,method="lm")+
+  facet_wrap(~name,nrow=2)+
+  theme(legend.position = "none",plot.title=element_text(hjust=0.5,size=20,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=15),strip.text=element_text(size=15))+
+  labs(title="Champions League Rating Comparision",
+       x="Season",
+       y="Rating",
+        color="Players")+
+  theme_bw()
+```
+
+
+
+And these are Domestic league rating results.
+```{r,echo=FALSE,fig.width=8}
+footballer %>% filter(competition!="Champions Lg",!is.na(rating),season!="2021-2022") %>% 
+  group_by(name) %>% 
+  select(season,name,rating) %>% ggplot(aes(x=season,y=rating,color=name))+
+  geom_point()+
+  geom_smooth(aes(group=1),se=FALSE,method="lm")+
+  facet_wrap(~name,nrow=2)+
+  theme(legend.position = "none",plot.title=element_text(hjust=0.5,size=20,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=15),strip.text=element_text(size=15))+
+  labs(title="Domestic League Rating Comparision",
+       x="Season",
+       y="Rating",
+       color="Players")+
+  theme_bw()
+```
+
+Conclusions seem to be quite straightforward. These guys prefer Messi rather than Ronaldo. We could see the confidence intervals of their ratings.
+
+Champions League confidence intervals and t-test results:
+```{r, echo=FALSE}
+footballer %>% filter(competition=="Champions Lg",!is.na(rating),season!="2021-2022") %>% 
+  group_by(name) %>% 
+  summarise(mean_rating = mean(rating),
+            median_rating = median(rating),
+            sd_rating = sd(rating),
+            count = n(),
+            # get t-critical value with (n-1) degrees of freedom
+            t_critical = qt(0.975, count-1),
+            se_rating = sd_rating/sqrt(count),
+            margin_of_error = t_critical * se_rating,
+            CI_low = mean_rating - margin_of_error,
+            CI_high = mean_rating + margin_of_error) %>% 
+  arrange(desc(mean_rating)) %>% select(name,mean_rating,median_rating,CI_low,CI_high)
+```
+
+```{r,echo=FALSE}
+champions_rating<-footballer %>% filter(competition=="Champions Lg",!is.na(rating),season!="2021-2022") %>% 
+  group_by(name) %>% 
+  select(season,name,rating)
+t.test(rating ~ name, data= champions_rating)
+```
+
+Undoubtedly, Messi enjoys higher mean scores than Ronaldo and their intervals even don't overlap. P value is less than 0.01 so Messi's mean champions league rating is statistically significantly larger than Ronaldo's.
+
+
+Domestic League confidence intervals and t-test results:
+```{r,echo=FALSE}
+footballer %>% filter(competition=="Champions Lg",!is.na(rating),season!="2021-2022") %>% 
+  group_by(name) %>% 
+  summarise(mean_rating = mean(rating),
+            median_rating = median(rating),
+            sd_rating = sd(rating),
+            count = n(),
+            # get t-critical value with (n-1) degrees of freedom
+            t_critical = qt(0.975, count-1),
+            se_rating = sd_rating/sqrt(count),
+            margin_of_error = t_critical * se_rating,
+            CI_low = mean_rating - margin_of_error,
+            CI_high = mean_rating + margin_of_error) %>% 
+  arrange(desc(mean_rating)) %>% select(name,mean_rating,median_rating,CI_low,CI_high)
+```
+
+```{r,echo=FALSE}
+league_rating<-footballer %>% filter(competition!="Champions Lg",!is.na(rating),season!="2021-2022") %>% 
+  group_by(name) %>% 
+  select(season,name,rating)
+t.test(rating ~ name, data= league_rating)
+```
+
+Once again, Ronaldo loses both fights and some of Ronaldo fans may say that these are unprofessional and trash ratings thus couldn't be taken seriously. In order to test their argument, I did a correlation test between rating and players' key stats (goals+assists) of each season.
+
+```{r,echo=FALSE,fig.width=8}
+fair_rate<-footballer %>% filter(competition=="Champions Lg",!is.na(rating),season!="2021-2022") %>% 
+  group_by(name) %>% 
+  mutate(key_stats=(goal+assist)/minutes) 
+cor.test(fair_rate$key_stats,fair_rate$rating)
+fair_rate%>% ggplot(aes(x=key_stats,y=rating,color=name))+
+  geom_point()+
+  geom_smooth(method="lm",se=FALSE)+
+  theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=20,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=15))+
+  labs(title="Rating and key stat(include penalty)",
+       x="Key stat",
+       y="Rating",
+       color="Players")
+```
+
+P value suggest that the correlation between them is significant and Messi's slope is surprisingly lower than that of Ronaldo. In other words, Messi's rating could be higher if given the same increase on rating of every key stats improvement. So Ronaldo fans' claim doesn't have its ground.
+
+```{r,echo=FALSE,fig.width=8}
+fair_rate_new<-footballer %>% filter(competition=="Champions Lg",!is.na(rating),season!="2021-2022") %>% 
+  group_by(name) %>% 
+  mutate(key_stats=(non_penalty+assist)/minutes) 
+cor.test(fair_rate_new$key_stats,fair_rate_new$rating)
+fair_rate_new%>% ggplot(aes(x=key_stats,y=rating,color=name))+
+  geom_point()+
+  geom_smooth(method="lm",se=FALSE)+
+  theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=20,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=15))+
+  labs(title="Rating and key stat(without penalty)",
+       x="Key stat",
+       y="Rating",
+       color="Players")
+```
+Same conclusions apply to key stats without penalty goals. So my final decision is that Messi wins the first round. Messi 1:0 Ronaldo.
+
+# Scoring Machine
+
+Both these two players are top scorers and leave us with many good memories of their unbelievable skills. Ronaldo scored a fantastic overhead goal in match against [Juventus](https://www.youtube.com/watch?v=BPgQTAJRzmw) and Messi replicated Maradona's magic in match against [Getafe](https://www.youtube.com/watch?v=mMiL4_1Yewg) when he was only 19 years old.
+
+Therefore, we have to compare their scores data to see who is a better shooter that helps his team climb towards the glory. I compared the data by their age for fairness considerations and I also conducted a t test to analyze the difference between their means. Moreover, I focused on their goal scoring per 90 minutes data because total numbers of scores could be viewed as a *nominal variable* but we need a *real variable* when carrying out a comparison analysis.
+
+```{r,echo=FALSE}
+footballer %>% filter(age>=21 & age<=32,season!="2021-2022") %>% 
+  group_by(name,age) %>% 
+  mutate(total_scores=90*sum(non_penalty)/sum(minutes)) %>% select(name,age,total_scores) %>% unique() %>% ggplot(aes(x=age,y=total_scores,color=name))+geom_point()+geom_smooth(se=FALSE)+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=20,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=15))+
+  labs(title="Scores data analysis by age",
+       x="Age",
+       y="Scores per 90mins",
+       color="Players")
+```
+
+```{r,echo=FALSE}
+footballer %>% filter(age>=21 & age<=32,season!="2021-2022") %>% 
+  group_by(name,age) %>% 
+  mutate(total_scores=90*sum(non_penalty)/sum(minutes)) %>% select(name,age,total_scores) %>% 
+  unique() %>% group_by(name) %>% 
+  summarise(mean_score=mean(total_scores),
+         median_score = median(total_scores),
+            sd_score = sd(total_scores),
+            count = n(),
+            # get t-critical value with (n-1) degrees of freedom
+            t_critical = qt(0.975, count-1),
+            se_score = sd_score/sqrt(count),
+            margin_of_error = t_critical * se_score,
+            CI_low = mean_score - margin_of_error,
+            CI_high = mean_score + margin_of_error) %>% 
+  arrange(desc(mean_score)) %>% select(name,mean_score,median_score,CI_low,CI_high)
+```
+
+```{r,echo=FALSE}
+score_machine<-footballer %>% filter(age>=21 & age<=32,season!="2021-2022") %>% 
+  group_by(name,age) %>% 
+  mutate(total_scores=90*sum(non_penalty)/sum(minutes)) %>% select(name,age,total_scores) %>% 
+  unique() %>% group_by(name)
+t.test(total_scores ~ name, data= score_machine)
+```
+
+As you could see from the graph, Messi scored more per 90 minutes in early years than Ronaldo but the latter one gradually caught up with Messi and surpassed him mildly after the age of 26. Meanwhile, t test results also show that there isn't any significant difference between their mean scores. I did two more t tests on different age periods and you could see that Messi leaded first before lagged behind Ronaldo.
+
+Early age:
+```{r,echo=FALSE}
+score_machine_young<-footballer %>% filter(age>=21 & age<=26,season!="2021-2022") %>% 
+  group_by(name,age) %>% 
+  mutate(total_scores=90*sum(non_penalty)/sum(minutes)) %>% select(name,age,total_scores) %>% 
+  unique() %>% group_by(name)
+t.test(total_scores ~ name, data= score_machine_young)
+```
+
+Old age:
+```{r,echo=FALSE}
+score_machine_old<-footballer %>% filter(age>=27 & age<=32,season!="2021-2022") %>% 
+  group_by(name,age) %>% 
+  mutate(total_scores=90*sum(non_penalty)/sum(minutes)) %>% select(name,age,total_scores) %>% 
+  unique() %>% group_by(name)
+t.test(total_scores ~ name, data= score_machine_old)
+```
+
+However, I realized that we could go deeper into this question because they had different numbers of shooting chances. Consequently, we could decide who is a better scorer by comparing their score-shoot rate. Some meddlesome Messi fans also called Ronaldo as Penaldo because he only scored penalties. So we are also going to analyze who keeps his composure better at 12 yards opportunities.
+
+Shooting transferring rate t-test analysis:
+```{r,echo=FALSE}
+shoot_acc<-footballer %>% filter(!is.na(shoot),season!="2021-2022") %>% 
+  group_by(name,season)%>% 
+  mutate(total_goals=sum(non_penalty),total_shoot=sum(shoot))%>%
+  mutate(shoot_transfer_rate=total_goals/total_shoot) %>% 
+  select(season,name,shoot_transfer_rate) %>% unique()
+t.test(shoot_transfer_rate ~ name, data= shoot_acc)
+```
+
+Couldn't say who wins. Although the difference is significant, Messi only has a 5% rate advantage compared with Ronaldo. Therefore, we checked the difference between the mean of their on target rate.  
+
+Shoot on target rate t-test analysis:
+```{r,echo=FALSE}
+target_acc<-footballer %>% filter(!is.na(shoot),season!="2021-2022") %>% 
+  group_by(name,season)%>% 
+  mutate(total_target=sum(on_target),total_shoot=sum(shoot))%>%
+  mutate(target_rate=total_target/total_shoot) %>% 
+  select(season,name,target_rate) %>% unique()
+t.test(target_rate ~ name, data= target_acc)
+```
+
+The p-value once again suggests the difference is significant and the rate advantage is a 7%. We could conclude that **Messi** is a better chance catcher and has higher shoot accurancy.
+
+Finally, we want to see their penalty performance.
+
+```{r,echo=FALSE}
+footballer %>% filter(season!="2021-2022") %>% 
+  group_by(name,season) %>% 
+  mutate(total_penalty=sum(penalty))%>%
+  select(season,name,total_penalty) %>% unique()%>% 
+  ggplot(aes(x=season,y=total_penalty,color=name))+
+  geom_point()+
+  geom_smooth(aes(group=1),se=FALSE)+
+  facet_wrap(~name,nrow=2)+
+  theme(legend.position = "none",plot.title=element_text(hjust=0.5,size=20,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=15),strip.text=element_text(size=15))+
+  labs(title="Penalty goals",
+       x="Season",
+       y="Numbers of penalty goals",
+        color="Players")
+```
+
+```{r,echo=FALSE}
+footballer %>% filter(season!="2021-2022") %>% 
+  group_by(name,season) %>% 
+  mutate(total_penalty=sum(penalty))%>%
+  select(season,name,total_penalty) %>% unique() %>% 
+  group_by(name) %>%
+  summarise(mean_pen=mean(total_penalty),sum_pen=sum(total_penalty))
+```
+Ronaldo do score more penalties but hey, scoring penalties needs a big heart and not everyone could make it when is forced to kick under pressure. So instead of concentrating on the numbers of penalties, I wanted to see who has a higher penalty success rate and did a t test as the supplement.
+
+```{r,echo=FALSE}
+penalty_master<-footballer %>% filter(penalty_attempt!=0,season!="2021-2022") %>% 
+  group_by(name,season) %>% 
+  mutate(total_penalty=sum(penalty),total_attempt=sum(penalty_attempt))%>%
+  mutate(penalty_success_rate=total_penalty/total_attempt) %>% 
+  select(season,name,penalty_success_rate) %>% unique()
+t.test(penalty_success_rate ~ name, data= penalty_master)
+```
+
+Two wonderful players couldn't be differentiated by statistics but ronaldo does have a higher mean success rate. So in conclusion, Messi does score more goals per 90 mins and has better shooting skills but Ronaldo also seems to have a stronger mentality when faced with difficulty. Messi 2:1 Ronaldo.
+
+
+
+```{r}
+footballer %>% filter(age>=21 & age<=32,season!="2021-2022") %>% 
+  group_by(name,age) %>% 
+  mutate(total_assists=90*sum(assist)/sum(minutes)) %>% select(name,age,total_assists) %>% unique() %>% ggplot(aes(x=age,y=total_assists,color=name))+geom_point()+geom_smooth(se=FALSE)+theme_bw()
+```
+
+```{r}
+assist_machine<-footballer %>% filter(age>=21 & age<=32,season!="2021-2022") %>% 
+  group_by(name,age) %>% 
+  mutate(total_assists=90*sum(assist)/sum(minutes)) %>% select(name,age,total_assists) %>% unique()
+t.test(total_assists ~ name, data=assist_machine)
+```
+
+```{r}
+pass_master<-footballer %>% filter(!is.na(pass),season!="2021-2022") %>% 
+  group_by(name,season)%>% 
+  mutate(total_pass_success=acclb+accsp) %>% 
+  mutate(total_pass_success=sum(total_pass_success),total_pass=sum(pass))%>%
+  mutate(pass_success_rate=total_pass_success/total_pass) %>% 
+  select(season,name,pass_success_rate) %>% unique()
+t.test(pass_success_rate ~ name, data= pass_master)
+```
+
+```{r}
+key_pass_master<-footballer %>% filter(!is.na(pass),season!="2021-2022") %>% 
+  group_by(name,season)%>% 
+  mutate(total_key_pass=sum(keypass),total_pass=sum(pass))%>%
+  mutate(keypass_success_rate=total_key_pass/total_pass) %>% 
+  select(season,name,keypass_success_rate) %>% unique()
+t.test(keypass_success_rate ~ name, data= key_pass_master)
+```
+
+```{r}
+assist_master<-footballer %>% filter(!is.na(pass),season!="2021-2022") %>% 
+  group_by(name,season)%>% 
+  mutate(total_assist=sum(assist),total_pass=sum(pass))%>%
+  mutate(assist_success_rate=total_assist/total_pass) %>% 
+  select(season,name,assist_success_rate) %>% unique()
+t.test(assist_success_rate ~ name, data= assist_master)
+```
