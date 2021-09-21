@@ -67,21 +67,39 @@ library(openintro)
 Therefore, it would be necessary to analyze how Evergrande, a once successful business enjoying gross margin higher then 30%, falls into such a strange situation. Briefings of my findings are as follows.
 
 - Evergrande's crisis is mainly caused by tighten credit policies on real estate sector, namely three red lines policies alike, and its ambitious expanding strategy back in 2017 should also take part of the responsibility. It had an opportunity window to follow its peers and reduce debt volumes in mid 2010s but it decided to play a risky game by buying large amounts of lands in tier 3 and 4 cities, making it difficult to improve its cash flow status now as projects in these cities have longer inventory cycle and the margin is also significantly lower.
+
 - No matter it is wealth management issue, interests default or the breach of contracts with its supplier, they are only the tip of an iceberg compared to Evergrande's real problem. Because Evergrande are doing these two things: 1)Adjusting its net finance cost by manipulating capitalization of interests subject and hiding investment loss to Properties Under Development subject, the latter's value on book is more than 1.2 trillion RMB; 2)Reducing long-term and short-term debts on its book while its trade payables and other accruals subject increase sharply, meaning Evergrande is exploiting its suppliers by its market power to satisfy three red lines requirements earlier and get refinance.
+
 - Without State intervention, it's hard to believe that Evergrande could walk away from this disaster in one piece. Evergrande tried really hard to save itself this year through discount sales, asset disposal and costs reduction. Unfortunately, the problem is so big that these methods are losing their effects. Sales gross margin fell enormously to barely 12% due to lower ASM and higher construction costs, and annual sales target only touched 58% after 8 months because customers are afraid that Evergrande couldn't build their apartments because construction stopped thanks to contract violation. Roughly 23 billions RMB worth of assets and stakes in subsidiaries had been transferred into cash, with 14.3 billions planned ahead. But it would be difficult to sell these assets at the expected price as everyone knows that Evergrande is in short of cash and no supplier would accept Evergrande's cheap asset as the solution of settling their contracts. As a result, Evergrande has a serious liquidity problem. Two important IPOs had taken in last year, without new external capital support nor debt restructure, Evergrande fate is on the hand of central government this time.
 
+## Content
 
+# Rush to sell
 
-```{r cars}
-summary(cars)
+Black Friday has been brought forward for both China domestic and global investors. Only this time, they crowd together to sell everything from Evergrande's US-dollar bonds to its H stock and decrease product exposure to China real estate industry as quick as possible. People are concerned about whether Evergrande will turn out to be China's Lehman Brothers because so many banks and non-bank financial institutions gave loans or held bonds of Evergrande. If the company defaults and goes bankrupt in the end, there is a moderate possibility of inciting a systematic risk event that causes world another global financial crisis which would certainly be catastrophic in the middle of a pandemic. Therefore, investors are trading the worst scenarios and Evergrande Hong Kong stock price slumps more than 80%.
+```{r, evergrande stock,fig.width=8}
+#Loading the footballers dataset
+stock_price <- read_csv(here::here("data", "stock price.csv")) %>% 
+  janitor::clean_names()
+stock_price_new<- stock_price %>% 
+  pivot_longer(
+  cols = 2:8,
+  names_to = 'name',
+  values_to = 'price') %>% mutate(date=as.Date.character(date))
+ggplot(stock_price_new,aes(x=date,y=price,color=name))+
+  geom_line()+
+  theme_bw()+
+  labs(title="Evergrande and its peers stock price graph",
+    x="Date",
+       y="H stock price",
+    color="Company name")+
+  theme(plot.title=element_text(hjust=0.5,size=20,face="bold"),axis.text =element_text(size=15),axis.title = element_text(size=15),legend.text = element_text(size=15),legend.title = element_text(size=15))+
+  geom_vline(aes(xintercept=as.Date.character("2021-01-01")),size=0.2)
 ```
 
-## Including Plots
+As you could see,
 
-You can also embed plots, for example:
+To be continued(Many data )...
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
