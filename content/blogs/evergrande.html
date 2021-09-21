@@ -16,12 +16,12 @@ title: Giant's fall?
 
 <div id="preview" class="section level2">
 <h2>Preview</h2>
-<p>"Come on Evergrande!" It almost feels like the glory of this Chinese second-largest real estate developer was just yesterday, when its football team marched and finally crowned as the winner of 2013 and 2015 AFC champions league, bringing joys and tears for thousands of fans as fulfilling their long last dreams. However, this company is also the most indebted developer with higher than 400 billions yuan of net debt waiting to be exploded on its balance sheet, forcing retail investors who couldn’t get payment of its wealth management product to flood into Evergrande’s office and shout "Return my money Evergrande!"</p>
-<p>Therefore, it would be necessary to analyze how Evergrande, a once successful business enjoying gross margin higher then 30%, falls into such a strange situation. Briefings of my findings are as follows.</p>
+<p>"Come on Evergrande!" It almost feels like the glory of this Chinese second-largest real estate developer was just yesterday, when its football team marched and finally crowned as the winner of 2013 and 2015 AFC champions league, bringing joys and tears to thousands of fans for fulfilling their long last dreams. However, this company is also the most indebted developer with higher than 400 billions yuan of net debt waiting to be exploded on its balance sheet, forcing retail investors who couldn’t get repayment of its wealth management product to flood into Evergrande’s office and shout "Return my money Evergrande!"</p>
+<p>Therefore, it would be necessary to analyze how Evergrande, a once successful business enjoying gross margin higher then 30%, drags itself into such a strange situation. Briefings of my findings are as follows.</p>
 <ul>
-<li><p>Evergrande’s crisis is mainly caused by tighten credit policies on real estate sector, namely three red lines policies alike, and its ambitious expanding strategy back in 2017 should also take part of the responsibility. It had an opportunity window to follow its peers and reduce debt volumes in mid 2010s but it decided to play a risky game by buying large amounts of lands in tier 3 and 4 cities, making it difficult to improve its cash flow status now as projects in these cities have longer inventory cycle and the margin is also significantly lower.</p></li>
-<li><p>No matter it is wealth management issue, interests default or the breach of contracts with its supplier, they are only the tip of an iceberg compared to Evergrande’s real problem. Because Evergrande are doing these two things: 1)Adjusting its net finance cost by manipulating capitalization of interests subject and hiding investment loss to Properties Under Development subject, the latter’s value on book is more than 1.2 trillion RMB; 2)Reducing long-term and short-term debts on its book while its trade payables and other accruals subject increase sharply, meaning Evergrande is exploiting its suppliers by its market power to satisfy three red lines requirements earlier and get refinance.</p></li>
-<li><p>Without State intervention, it’s hard to believe that Evergrande could walk away from this disaster in one piece. Evergrande tried really hard to save itself this year through discount sales, asset disposal and costs reduction. Unfortunately, the problem is so big that these methods are losing their effects. Sales gross margin fell enormously to barely 12% due to lower ASM and higher construction costs, and annual sales target only touched 58% after 8 months because customers are afraid that Evergrande couldn’t build their apartments because construction stopped thanks to contract violation. Roughly 23 billions RMB worth of assets and stakes in subsidiaries had been transferred into cash, with 14.3 billions planned ahead. But it would be difficult to sell these assets at the expected price as everyone knows that Evergrande is in short of cash and no supplier would accept Evergrande’s cheap asset as the solution of settling their contracts. As a result, Evergrande has a serious liquidity problem. Two important IPOs had taken in last year, without new external capital support nor debt restructure, Evergrande fate is on the hand of central government this time.</p></li>
+<li><p>Evergrande’s crisis is mainly caused by tighten credit policies on real estate sector, namely three red lines policies alike, and its ambitious expanding strategy back in 2017 should also take part of the responsibility. It had an opportunity window to follow its peers and reduce debt volumes in mid 2010s but it decided to play a risky game by buying large amounts of lands in tier 3 and 4 cities instead, making it difficult to improve its cash flow status now as real estate projects in these cities have longer inventory cycle and the margin is also significantly lower.</p></li>
+<li><p>No matter whether it is wealth management issue, interests default or the breach of contracts with its supplier, they are only the tip of an iceberg compared to Evergrande’s real problem. Because Evergrande are basically doing these two things: 1)Adjusting its net finance cost by manipulating capitalization of interests subject and hiding investment loss to Properties Under Development subject, the latter’s value on book is more than 1.2 trillion RMB; 2)Reducing long-term and short-term debts on its book while sharply increasing its trade payables and other accruals subject, meaning Evergrande is exploiting its suppliers by its market power in order to satisfy three red lines requirements earlier and get finance access.</p></li>
+<li><p>Without State intervention, it would be hard to believe that Evergrande could walk away from this disaster in one piece. Evergrande tried really hard to save itself this year through discount sales, asset disposal and costs reduction. Unfortunately, the problem is so big that these methods are losing their effects. Gross margin of company fell shockingly to barely 12% due to lower ASM and higher construction costs, and annual sales target only reached 58% after 8 months because customers were afraid that Evergrande couldn’t finish the construction of their apartments because many of them stopped thanks to contracts violation. Roughly 23 billions RMB worth of assets and stakes in subsidiaries had been sold to get cash back, with 14.3 billions RMB worth of assets planned ahead. But it would be difficult to sell these assets at the expected price as everyone knows that Evergrande is in short of cash and no supplier would accept Evergrande’s cheap asset as the solution of settling their contracts. As a result, Evergrande has a serious liquidity problem. Two important IPOs had taken in last year, without new external capital support nor debt restructure, Evergrande fate is on the hand of central government this time.</p></li>
 </ul>
 </div>
 <div id="content" class="section level2">
@@ -29,25 +29,54 @@ title: Giant's fall?
 </div>
 <div id="rush-to-sell" class="section level1">
 <h1>Rush to sell</h1>
-<p>Black Friday has been brought forward for both China domestic and global investors. Only this time, they crowd together to sell everything from Evergrande’s US-dollar bonds to its H stock and decrease product exposure to China real estate industry as quick as possible. People are concerned about whether Evergrande will turn out to be China’s Lehman Brothers because so many banks and non-bank financial institutions gave loans or held bonds of Evergrande. If the company defaults and goes bankrupt in the end, there is a moderate possibility of inciting a systematic risk event that causes world another global financial crisis which would certainly be catastrophic in the middle of a pandemic. Therefore, investors are trading the worst scenarios and Evergrande Hong Kong stock price slumps more than 80%.</p>
-<pre class="r"><code>#Loading the footballers dataset
-stock_price &lt;- read_csv(here::here(&quot;data&quot;, &quot;stock price.csv&quot;)) %&gt;% 
-  janitor::clean_names()
-stock_price_new&lt;- stock_price %&gt;% 
-  pivot_longer(
-  cols = 2:8,
-  names_to = &#39;name&#39;,
-  values_to = &#39;price&#39;) %&gt;% mutate(date=as.Date.character(date))
-ggplot(stock_price_new,aes(x=date,y=price,color=name))+
-  geom_line()+
-  theme_bw()+
-  labs(title=&quot;Evergrande and its peers stock price graph&quot;,
-    x=&quot;Date&quot;,
-       y=&quot;H stock price&quot;,
-    color=&quot;Company name&quot;)+
-  theme(plot.title=element_text(hjust=0.5,size=20,face=&quot;bold&quot;),axis.text =element_text(size=15),axis.title = element_text(size=15),legend.text = element_text(size=15),legend.title = element_text(size=15))+
-  geom_vline(aes(xintercept=as.Date.character(&quot;2021-01-01&quot;)),size=0.2)</code></pre>
-<p><img src="/blogs/evergrande_files/figure-html/evergrande%20stock-1.png" width="1440" style="display: block; margin: auto;" /></p>
-<p>As you could see,</p>
-<p>To be continued(Many data )…</p>
+<p>Black Friday had been brought forward for both China domestic and global investors. Only this time, they crowded together to sell everything from Evergrande’s US-dollar bonds to its H-stock to decrease risk exposure to China real estate industry as quick as possible. People are concerned about whether Evergrande will turn out to be China’s Lehman Brothers because so many banks and non-bank financial institutions either gave loans or held bonds of Evergrande. If the company defaults and goes bankrupt in the end, there is a moderate possibility of inciting a systematic risk event that costs world another global financial crisis which would certainly be catastrophic in the middle of a pandemic. Therefore, investors are trading the worst scenarios and Evergrande Hong Kong stock price has slumped more than 80% so far this year.
+<img src="/blogs/evergrande_files/figure-html/evergrande%20stock-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p>As you could see, Evergrande, alone with other major real estate companies, has suffered great depress on its stock price, demonstrating the fact that this is a common problem for the whole real estate sector. Considering the fact that real estate industry contributes roughly 30% of China GDP, this problem could exacerbated and extended even further, ruining growth expectation years ahead. Evergrande has been downgraded based on its credit risks attached by three major credit rating agencies, and all of them have revised ratings of Evergrande US-dollar bonds from B to C, resulting in the decrease of bond prices and the rise of YTM.</p>
+<p><img src="/blogs/evergrande_files/figure-html/unnamed-chunk-1-1.png" width="960" style="display: block; margin: auto;" />
+Unsurprisingly, Evergrande US-dollar bonds and CN-yuan bonds dropped heavily around 70% and you could notice that there was a sudden bounce back at the end of August in CN-yuan bonds. That’s because there were rumors that the state government would provide assistance to Evergrande and the company also settled all its offshore debts in advance unexpectedly. Moreover, it seems that domestic investors are We could run two more correlation tests</p>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  x and y
+## t = 28, df = 391, p-value &lt;2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.7860 0.8509
+## sample estimates:
+##    cor 
+## 0.8211</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  x and y
+## t = 28, df = 391, p-value &lt;2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.7864 0.8512
+## sample estimates:
+##    cor 
+## 0.8215</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  x and y
+## t = 82, df = 391, p-value &lt;2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.9662 0.9772
+## sample estimates:
+##    cor 
+## 0.9722</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  x and y
+## t = 69, df = 391, p-value &lt;2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.9533 0.9683
+## sample estimates:
+##    cor 
+## 0.9615</code></pre>
+<p>To be continued()…</p>
 </div>
