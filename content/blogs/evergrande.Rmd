@@ -54,7 +54,7 @@ library(GGally)
 library(readxl)
 library(here)
 library(skimr)
-library(janitor)AFC
+library(janitor)
 library(broom)
 library(tidyquant)
 library(infer)
