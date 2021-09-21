@@ -119,7 +119,7 @@ ggplot(bond_price_new,aes(x=date,y=Price,color=Bond_ID)) +
        color="Bond ID",
        x="Date")
 ```
-Unsurprisingly, Evergrande US-dollar bonds and CN-yuan bonds dropped heavily around 70% and you could notice that there was a sudden bounce back at the end of August in CN-yuan bonds. That's because there were rumors that the state government would provide assistance to Evergrande and the company also settled all its offshore debts in advance unexpectedly. Moreover, it seems that domestic investors are We could run two more correlation tests 
+Unsurprisingly, Evergrande US-dollar bonds and CN-yuan bonds dropped heavily around 70% and you could notice that there was a sudden bounce back at the end of August in CN-yuan bonds. That's because there were rumors that the state government would provide assistance to Evergrande and the company also settled all its offshore debts in advance unexpectedly. Moreover, it seems that domestic investors are more complacent than their foreign counterparts regarding how this would unfold. We could run two more correlation tests to show that.
 
 
 ```{r,echo=FALSE}
@@ -127,13 +127,14 @@ cor.test(bond_price$am915538_corp,bond_price$af222581_corp)
 cor.test(bond_price$zp316923_corp,bond_price$ao063630_corp)
 ```
 
+
 ```{r,echo=FALSE}
 cor.test(bond_price$am915538_corp,bond_price$ao063630_corp)
 cor.test(bond_price$zp316923_corp,bond_price$af222581_corp)
 ```
 
 
-To be continued()...
+To be continued...
 
 
 

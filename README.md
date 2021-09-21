@@ -1,2 +1,2 @@
 # my_beautiful_website
-good! yes
+making a website about myself
