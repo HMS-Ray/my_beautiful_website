@@ -371,6 +371,19 @@ assist_master<-footballer %>% filter(!is.na(pass),season!="2021-2022") %>%
   mutate(assist_success_rate=total_assist/total_pass) %>% 
   select(season,name,assist_success_rate) %>% unique()
 t.test(assist_success_rate ~ name, data= assist_master)
+set.seed(007)
+assist_dif<-assist_master %>% 
+  specify(assist_success_rate~name) %>% 
+  calculate(stat="diff in means",order=c("Messi","Ronaldo"))
+null_test<-assist_master %>% 
+  specify(assist_success_rate~name) %>%
+  hypothesise(null = "independence") %>% 
+  generate(reps = 1000,type = "permute") %>% 
+  calculate(stat="diff in means",order=c("Messi","Ronaldo"))
+null_test %>% visualise()+
+  shade_p_value(obs_stat = assist_dif,direction = "two-sided")
+null_test %>% 
+  get_p_value(obs_stat = assist_dif,direction = "two-sided")
 ```
 
 Unexpectedly, there is no significant difference between their assist capabilities. So instead I tried to find if there is any difference in their pass success rate and key pass success rate for using as a substitute of their capacity. Because some Ronaldo fans could argue that Messi makes more safe passes by following the method of Tiki-taka. That's why I also analyzed the value of their mean key pass success rate.
