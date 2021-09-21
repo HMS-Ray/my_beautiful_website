@@ -77,7 +77,7 @@ Therefore, it would be necessary to analyze how Evergrande, a once successful bu
 # Rush to sell
 
 Black Friday has been brought forward for both China domestic and global investors. Only this time, they crowd together to sell everything from Evergrande's US-dollar bonds to its H stock and decrease product exposure to China real estate industry as quick as possible. People are concerned about whether Evergrande will turn out to be China's Lehman Brothers because so many banks and non-bank financial institutions gave loans or held bonds of Evergrande. If the company defaults and goes bankrupt in the end, there is a moderate possibility of inciting a systematic risk event that causes world another global financial crisis which would certainly be catastrophic in the middle of a pandemic. Therefore, investors are trading the worst scenarios and Evergrande Hong Kong stock price slumps more than 80%.
-```{r, evergrande stock,fig.width=8}
+```{r, evergrande stock,fig.width=15}
 #Loading the footballers dataset
 stock_price <- read_csv(here::here("data", "stock price.csv")) %>% 
   janitor::clean_names()
