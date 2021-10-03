@@ -11,6 +11,30 @@ slug: evergrande
 title: Giant's fall?
 ---
 
+<style type="text/css">
+
+body{ /* Normal  */
+      font-size: 15px;
+  }
+h1.title {
+  font-size: 40px;
+  color: DarkRed;
+}
+h1 { /* Header 1 */
+  font-size: 30px;
+  color: White;
+}
+h2 { /* Header 2 */
+    font-size: 20px;
+  color: White;
+}
+h3 { /* Header 3 */
+  font-size: 15px;
+  font-family: "Times New Roman", Times, serif;
+  color: White;
+}
+</style>
+
 ```{r, setup, echo=FALSE}
 knitr::opts_chunk$set(
   message = FALSE, 
@@ -22,7 +46,7 @@ options(digits = 4)
 # default figure size
 knitr::opts_chunk$set(
   fig.width=10, 
-  fig.height=6.75,
+  fig.height=5,
   fig.align = "center"
 )
 ```
@@ -60,24 +84,25 @@ library(tidyquant)
 library(infer)
 library(openintro)
 ```
-## Preview
+# Preview
 
-\"Come on Evergrande!\" It almost feels like the glory of this Chinese second-largest real estate developer was just yesterday, when its football team marched and finally crowned as the winner of 2013 and 2015 AFC champions league, bringing joys and tears to thousands of fans for fulfilling their long last dreams. However, this company is also the most indebted developer with higher than 400 billions yuan of net debt waiting to be exploded on its balance sheet, forcing retail investors who couldn't get repayment of its wealth management product to flood into Evergrande's office and shout \"Return my money Evergrande!\"
+\"Come on Evergrande!\" It almost feels like the glory of this Chinese second-largest real estate developer was just yesterday, when its football team marched and finally crowned as the winner of 2013 and 2015 AFC champions league, bringing joys and tears to thousands of fans for fulfilling their long last dreams. However, this company is also the most indebted developer with higher than 400 billions yuan of net debt waiting to be exploded on its balance sheet, forcing retail investors who couldn't get repayment of its wealth management product to flood into Evergrande's headquarter and shout out \"Return my money Evergrande!\" Shenzhen police showed up pretty quickly to appease the furious retail investors and the city itself also had a long history of engagement with Evergrande.
 
-Therefore, it would be necessary to analyze how Evergrande, a once successful business enjoying gross margin higher then 30%, drags itself into such a strange situation. Briefings of my findings are as follows.
+Therefore, it would be necessary to analyze how Evergrande, a once successful business enjoying gross margin higher then 30%, drags itself into such a strange situation. Briefings of my analysis are as follows.
 
-- Evergrande's crisis is mainly caused by tighten credit policies on real estate sector, namely three red lines policies alike, and its ambitious expanding strategy back in 2017 should also take part of the responsibility. It had an opportunity window to follow its peers and reduce debt volumes in mid 2010s but it decided to play a risky game by buying large amounts of lands in tier 3 and 4 cities instead, making it difficult to improve its cash flow status now as real estate projects in these cities have longer inventory cycle and the margin is also significantly lower.
+- Evergrande's crisis is mainly caused by tighten credit policies on real estate sector, namely three red lines policies alike, and its ambitious expanding strategy back in 2017 should also take part of the responsibility. It had an opportunity window to follow its peers and reduce debt volumes in mid 2010s but it decided to play a risky game instead by buying large amounts of lands in tier 3 and 4 cities, making it difficult to improve its cash flow status now as real estate projects in these cities have longer inventory cycle and the business margin is also significantly lower here.
 
-- No matter whether it is wealth management issue, interests default or the breach of contracts with its supplier, they are only the tip of an iceberg compared to Evergrande's real problem. Because Evergrande are basically doing these two things: 1)Adjusting its net finance cost by manipulating capitalization of interests subject and hiding investment loss to Properties Under Development subject, the latter's value on book is more than 1.2 trillion RMB; 2)Reducing long-term and short-term debts on its book while sharply increasing its trade payables and other accruals subject, meaning Evergrande is exploiting its suppliers by its market power in order to satisfy three red lines requirements earlier and get finance access.
+- No matter whether it is wealth management product issue, interests default or the violence of contracts with its supplier, these are probably only the tip of an iceberg compared to Evergrande's real problem. Two things provide convenience to Evergrade: 1)The company could adjust its net finance cost by manipulating capitalization of interests subject and hiding operation loss to Properties Under Development subject, the latter's value on book is more than 1.2 trillion RMB and barely report any loss of its fair value; 2)The company could reduce long-term and short-term debts on its book while sharply increasing its trade payables and other accruals subject, meaning Evergrande is exploiting its suppliers by its market power in order to satisfy three red lines requirements earlier and get finance access.
 
-- Without State intervention, it would be hard to believe that Evergrande could walk away from this disaster in one piece. Evergrande tried really hard to save itself this year through discount sales, asset disposal and costs reduction. Unfortunately, the problem is so big that these methods are losing their effects. Gross margin of company fell shockingly to barely 12% due to lower ASM and higher construction costs, and annual sales target only reached 58% after 8 months because customers were afraid that Evergrande couldn't finish the construction of their apartments because many of them stopped thanks to contracts violation. Roughly 23 billions RMB worth of assets and stakes in subsidiaries had been sold to get cash back, with 14.3 billions RMB worth of assets planned ahead. But it would be difficult to sell these assets at the expected price as everyone knows that Evergrande is in short of cash and no supplier would accept Evergrande's cheap asset as the solution of settling their contracts. As a result, Evergrande has a serious liquidity problem. Two important IPOs had taken in last year, without new external capital support nor debt restructure, Evergrande fate is on the hand of central government this time.
+- Without State intervention, it would be hard to believe that Evergrande could walk away from this disaster in one piece. Evergrande tried really hard to save itself this year through discount sales, asset disposal and costs reduction. Unfortunately, the problem is so big that these methods are losing their effects in the mean time. Gross margin of company fell shockingly to barely 12% due to lower ASP and higher construction and land costs, and annual sales target only reached 59% after 9 months' sales because customers now are afraid that Evergrande couldn't finish the construction of their apartments because many of them have stopped due to contracts violation. Roughly 14.3 billions RMB worth of assets and stakes in its subsidiaries had been sold to get cash back in the first half of this year, with 10 more billions RMB worth of assets planned ahead. But it would be difficult to sell these assets at the expected price as investors are avoiding assets that have any connection to Evergrande and suppliers refuse to accept Evergrande's properties with decreased value as the solution to complete its contract responsibility. Even worse, value of stakes it owns in several subsidiaries have shrunk more than 40% in a month. As a result, Evergrande has a serious liquidity problem and things would become more troublesome for the Evergrande if bad news surrounding it last longer. Two important IPOs had taken place in Hong Kong last year, without new external capital injection nor debt restructuring, Evergrande's fate is on the hand of central government this time.
 
-## Content
+# Content
 
-# Rush to sell
+## Rush to sell
 
-Black Friday had been brought forward for both China domestic and global investors. Only this time, they crowded together to sell everything from Evergrande's US-dollar bonds to its H-stock to decrease risk exposure to China real estate industry as quick as possible. People are concerned about whether Evergrande will turn out to be China's Lehman Brothers because so many banks and non-bank financial institutions either gave loans or held bonds of Evergrande. If the company defaults and goes bankrupt in the end, there is a moderate possibility of inciting a systematic risk event that costs world another global financial crisis which would certainly be catastrophic in the middle of a pandemic. Therefore, investors are trading the worst scenarios and Evergrande Hong Kong stock price has slumped more than 80% so far this year.
-```{r, evergrande stock,fig.width=15,echo=FALSE}
+Black Friday had been brought forward for both Chinese domestic and global investors. Only this time, they crowded together to sell everything from Evergrande's US-dollar bonds to its H-stock in order to decrease risk exposure to China real estate industry as quick as possible. People are concerned about whether Evergrande will turn out to be China's Lehman Brothers because so many banks and non-bank financial institutions either gave loans or held bonds and equity of Evergrande in their products. If the company defaults and goes bankrupt in the end, there is a moderate possibility to incite a systematic risk event that costs an exhausted global market which just begins to take some air from the impacts of the pandemic. Therefore, investors are trading the worst scenarios and Evergrande's Hong Kong stock price has slumped more than 80% so far this year.
+
+```{r, evergrande stock,fig.width=15,fig.height=9,echo=FALSE}
 #Loading the footballers dataset
 stock_price <- read_csv(here::here("data", "stock price.csv")) %>% 
   janitor::clean_names()
@@ -97,9 +122,9 @@ ggplot(stock_price_new,aes(x=date,y=price,color=name))+
   geom_vline(aes(xintercept=as.Date.character("2021-01-01")),size=0.2)
 ```
 
-As you could see, Evergrande, alone with other major real estate companies, has suffered great depress on its stock price, demonstrating the fact that this is a common problem for the whole real estate sector. Considering the fact that real estate industry contributes roughly 30% of China GDP, this problem could exacerbated and extended even further, ruining growth expectation years ahead. Evergrande has been downgraded based on its credit risks attached by three major credit rating agencies, and all of them have revised ratings of Evergrande US-dollar bonds from B to C, resulting in the decrease of bond prices and the rise of YTM.
+However, as you could see, not only Evergrande, but alone with other major real estate companies, have suffered great loss on their stock price, demonstrating the fact that this is a common problem for the whole real estate sector in China. Considering the fact that the real estate industry contributes roughly 30% of China annual GDP, this problem could exacerbated and extended even further to China's growth story, ruining growth expectation years ahead. Many analysts had cut their forecasts of this year's China GDP growth to a level lower than 8%. Unsurprisingly, Evergrande has been downgraded as well based on its credit risks attached by three major credit rating agencies, and all of them have revised ratings of Evergrande US-dollar bonds from B to C so far this year, resulting in the free dive of company bond prices and a significant rise of YTM.
 
-```{r,fig.width=10,echo=FALSE}
+```{r,fig.width=15,fig.height=9,echo=FALSE}
 bond_price <- read_csv(here::here("data", "bond price.csv")) %>% 
   janitor::clean_names()
 
@@ -119,22 +144,361 @@ ggplot(bond_price_new,aes(x=date,y=Price,color=Bond_ID)) +
        color="Bond ID",
        x="Date")
 ```
-Unsurprisingly, Evergrande US-dollar bonds and CN-yuan bonds dropped heavily around 70% and you could notice that there was a sudden bounce back at the end of August in CN-yuan bonds. That's because there were rumors that the state government would provide assistance to Evergrande and the company also settled all its offshore debts in advance unexpectedly. Moreover, it seems that domestic investors are more complacent than their foreign counterparts regarding how this would unfold. We could run two more correlation tests to show that.
 
+Evergrande US-dollar bonds and CN-yuan bonds dropped heavily around 70% and you could notice that there was a sudden bounce back at the end of August in Yuan-Dominated bonds. That's because there were rumors that the state government would provide assistance to Evergrande debt issue and the company was willing to solve its suppliers and wealth management product problems primarily. However, foreign investors usually don't get many special treatments and care from the Chinese government and so it seems that domestic investors are more confident than their foreign counterparts regarding how this would unfold. We could run two more correlation tests to prove that.
 
+Correlation test between US-Dollar dominated bond and CHINA-Yuan dominated bond:
 ```{r,echo=FALSE}
 cor.test(bond_price$am915538_corp,bond_price$af222581_corp)
 cor.test(bond_price$zp316923_corp,bond_price$ao063630_corp)
 ```
 
-
+Correlation test on bonds under same currency:
 ```{r,echo=FALSE}
 cor.test(bond_price$am915538_corp,bond_price$ao063630_corp)
 cor.test(bond_price$zp316923_corp,bond_price$af222581_corp)
 ```
 
+Supplement T-test:
+```{r,echo=FALSE}
+supplement_test<- bond_price_new %>% 
+  filter(Bond_ID=="af222581_CNY"|Bond_ID=="ao063630_USD")
+t.test(Price~Bond_ID,data=supplement_test)
+```
 
-To be continued...
+These test results prove the fact that performances of bonds in different regions tend to be more similar with peers of the same. All correlation tests' p-values are lower than 1% thus statistically significant and the correlation is higher than 95% between bonds of the same currency. This finding asserted the assumption that investors behaved by different information sources. We further did a t-test as a supplement to support our assumption that Chinese investors are more sensitive and confident to the rumors of Evergrande debt issue and results showed that domestic bonds' mean prices are significantly higher than those of dollar dominated, bolstering our assumption.
+
+Fragile credit conditions soon translated into credit choke towards Chinese companies having similar leverage issue as Evergrande does. Meanwhile, Chinese state government has also shown its strong determination on achieving its goal of common prosperity and its cautions on disorderly capital expansion through ruthless intervention starting from last year on Ant Group's IPO, unexpected supervision on Didi and other renowned tech companies that finished their US IPOs just few days before, and sudden crackdown on the after-school education industry. These actions caused turmoil among foreign investors in China and some of those with longstanding business in China fled out and directors from several hedge funds came out wo send warnings about investing in this world second-largest economy. There is no doubt that the growth is no longer the priority of the government this year given the strong performance in the first two quarters and it is going to use this window to implement its cross-cycle adjustments regarding structural changes on country's economics.
+
+```{r,fig.width=10,echo=FALSE}
+high_yield_index <- read_csv(here::here("data", "High yield index.csv")) %>% 
+  janitor::clean_names()
+high_yield_index_new<-high_yield_index %>% 
+  pivot_longer(
+  cols=2:3,
+  names_to = "Index_ID",
+  values_to="Value"
+)%>% mutate(date=as.Date(date))
+
+ggplot(high_yield_index_new,aes(x=date,y=Value,color=Index_ID))+
+  geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="US-based and CHN-baesd C-rated companies high yield index",
+       color="",
+       x="Date")+scale_color_manual(labels = c("US-based high yield index","CHN-based high yield index"), values = c("blue", "red"))
+```
+
+The graph above compares the price performance of two high yield bonds index that represent C rated US-dollar bonds of US companies and China companies respectively. High yield bonds should have performed well in this environment with adequate liquidity and low treasury 10-year yield. US high yield markets recorded historical sales this year and high yield index also rose to a 3-years high in a risk-on environment, letting many bond fund managers to suggest that investors should put money into the equity market because the credit market is boring because of the distortion from the FED. 10-year treasury climbed in the first half of year to 1.7% before fell to 1.3% even the inflation turned out to be not that transitory and the economy growth expectation was running hot. It's not hard to see from this graph that Evergrande crisis is affecting the sentiment towards risky Chinese companies as a whole. The decrease was more obvious from July and it was also the month in which one of the China local banks asked the local court to frozen Evergrande's assets due to miss payments of loans. The completely different picture of high yield bonds for two huge economy implicates their different priorities and strategies next step. The effects will persist for a while and no one knows how worse it has to be further. All in all, these analysis show that the risks are high and the problem has the propensity to flow over to other sectors. Therefore, Evergrande's situation would be watched meticulously and investors would make choices based on how this company would try to save itself.
+
+This could also be proved from Hang Seng property index and CSI 300 real estate index performances:
+```{r,echo=FALSE,fig.width=10}
+index <- read_csv(here::here("data", "index.csv")) %>% 
+  janitor::clean_names()
+index_new<-index %>% 
+  pivot_longer(
+  cols=2:3,
+  names_to = "Index_ID",
+  values_to="Value"
+)%>% mutate(date=as.Date(date))
+
+ggplot(index_new,aes(x=date,y=Value))+
+  geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom",strip.text = element_text(size=10))+
+  facet_wrap(~Index_ID,nrow=2,scales = "free_y")+
+  labs(title="HS and CSI 300 property index",
+       color="Index ID",
+       x="Date")
+```
+
+## Credit pain
+
+The real estate sector is bleeding and so is the economy. There is no secret that China's growth have long been driven by the prosperity of its real estate industry, especially after pouring trillions of investments into economy by the central government after GFC. It absorbs a large share of fixed asset investment which accounts for roughly 70% of China annual GDP and it also represents majority of non-current assets and debts on the family balance sheet, enjoying a huge impact on consumer confidence and rent costs of tertiary sector. In a word, structural changes of the growth engine will cost and it surely costs a lot. Billions yuan of loans have been given to estate developers for developing and constructing their projects and debts, and families also borrow huge amounts of money from the bank as mortgages.
+
+Loan growth is key to support the gdp growth because one's consumption is another one's revenue. When economy is running hot, confidence is high and thus companies are willing to increase their CapEx and consumers are willing to purchase by using their future income. Therefore, the economy prospect in return is reinforced and performs even better. This could be depicted by YoY growth graphs of gdp and loan, and I also found out that loan growth YoY has a leading explanatory effect on gdp growth YoY about 3-quarters. 
+
+```{r,fig.width=10,echo=FALSE}
+gdp_loan <- read_csv(here::here("data", "gpd.csv")) %>% 
+  janitor::clean_names()
+loan_new<-gdp_loan %>% mutate(loan_lead=as.numeric(lead(loan_qoq,n=3))) %>% filter(!is.na(loan_lead)) %>% slice(1:15) %>% select(date,gdp_qoq,loan_qoq,loan_lead)
+loan_new %>% pivot_longer(cols=2:3,names_to = "qoq",values_to = "value") %>% 
+  ggplot(aes(x=as.Date.character(date),y=value*100,color=qoq))+geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="GDP and Loan growth qoq",
+       color="",
+       x="Date",y="")+scale_color_manual(labels = c("gdp_qoq","loan_qoq"), values = c("blue", "red"))+
+  scale_y_continuous(breaks = c(0,10,20,30),labels = function(x) paste0(x,"%"))
+```
+
+Correlation test on loan and gdp growth qoq rate:
+```{r,echo=FALSE}
+cor.test(loan_new$gdp_qoq,loan_new$loan_lead)
+```
+
+Hence, since the latest quarterly loan growth data shows a apparent slowdown, China GDP growth of the second half and even of the next year will be under great pressure when country's export won't be as strong as this year because of the substitution effect of global reopening which means some countries in Southeastern Asia will take away part of exports. Besides, the normalization of developed countries fiscal policy also means that consumers demand in these regions will gradually fade away.
+
+Besides, apart from the relationship between GDP and loan, a similar one could also be observed from the relationship between the mortgage and real estate sector investment. As discussed before, fixed asset investment comprises of a large part of real estate investment. Consequently, if real estate investment growth starts to decline, China GDP would eventually return to its potential growth rate. I made a graph and did a correlation test to support this argument as well.
+
+```{r,fig.width=10,echo=FALSE}
+investment_credit <- read_csv(here::here("data", "investment and credit.csv")) %>% 
+  janitor::clean_names()
+investment_credit %>% pivot_longer(cols=2:3,names_to = "factor",values_to = "value") %>% select(date,factor,value) %>% ggplot(aes(x=as.Date.character(date),y=as.numeric(value)*100,color=factor))+geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Mortgage and real estate investment growth yoy",
+       x="Date",y="",color="")+scale_color_manual(labels = c("mortgage_yoy","real_investment_yoy"), values = c("blue", "red"))+
+  scale_y_continuous(breaks = c(-20,0,20,40,60),labels = function(x) paste0(x,"%"))
+cor.test(investment_credit$mortgage_loans_yoy,investment_credit$real_estate_investment_yoy)
+```
+It also could be viewed from the relationship between mortgage and new construction rate:
+```{r,echo=FALSE}
+cor.test(investment_credit$mortgage_loans_yoy,investment_credit$new_construction_yoy)
+```
 
 
+In short, this relationship is another self-reinforced cycle as it represents the demand and supply of the real estate industry. As you could see that same-direction decline at the end of last graph, transactions will be dragged down and this has been translated into the price collapse of commodity like Iron ore, hurting reflation trades as well. Although the credit environment is stretched, real estate developers still need to pay their debts and deliver returns to investors, and the only way for them to achieve this is by counting more on themselves. The next graph shows that the percentage of self-refund money in total property development investment continuously climb upwards compared with domestic loans from year to date.
 
+```{r,fig.width=10,echo=FALSE}
+credit_tight <- read_csv(here::here("data", "credit tight.csv")) %>% 
+  janitor::clean_names()
+credit_tight %>%pivot_longer(cols=2:3,names_to = "factor",values_to = "value") %>%  ggplot(aes(x=as.Date.character(date),y=value*100,color=factor))+geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Shares of property development investment",
+       x="Date",y="",color="")+scale_color_manual(labels = c("self-refund","domestic loans"), values = c("blue", "red"))+
+  scale_y_continuous(breaks = c(0,10,20,30),labels = function(x) paste0(x,"%"),limits=c(10,35))
+```
+
+In August 2020, PBOC announced its "three red line" policy aiming at deleveraging the most indebted real estate developers and restricting banks lending preference to this problematic sector, marking its determination of rebuilding country's economy structure. Three red line metrics include liability to asset ratio after deducting deposit received should below 70%, net debt to equity ratio should below 100% and cash coverage ratio should above 1. A developer's borrowing growth rate is 0%, 5%, 10% and 15% separately depending on how many metrics it succeeds to meet. Unfortunately, according to the latest quarter report published by Evergrande, it merely satisfies one metric of making its net debt to equity ratio to 99.8% after a year's discounted sales to get its cash back and the other two metrics couldn't be seen how it could achieve given its poor cash status.
+
+```{r,fig.width=10,echo=FALSE}
+three_red_line <- read_csv(here::here("data", "three red line.csv")) %>% 
+  janitor::clean_names()
+three_red_line %>% pivot_longer(cols=2:3,names_to = "factor",values_to = "value") %>% 
+  ggplot(aes(x=as.Date.character(date)))+
+  geom_line(aes(x=as.Date.character(date),y=value,color=factor),inherit.aes = FALSE)+
+  geom_line(aes(x=as.Date.character(date),y=cash_coverage*100,color="my line")) +
+  scale_y_continuous(limits=c(0,250),
+    
+    # Features of the first axis
+    # name = "First Axis",
+    
+    # Add a second axis and specify its features
+    sec.axis = sec_axis(~.*0.01))+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Evergrande three red line metrics",
+       x="Date",y="",color="")+scale_color_manual(labels = c("liability to asset","cash coverage","net debt to equity"), values = c("black", "red","blue"))+scale_x_date(date_labels = "%m/%Y")+geom_hline(yintercept = 70,linetype="dashed")+geom_hline(yintercept = 100,linetype="dashed")+ annotate("text",x=as.Date.character("2015-10-15"),y=76,label="Liability to Asset ratio < 70% ",face='bold',size=3)+
+  annotate("text",x=as.Date.character("2015-09-30"),y=112,label="Net debt to equity < 100%\nCash coverage ratio > 1 ",face='bold',size=3)
+```
+
+## Sales, sales and sales
+
+Evergrande is selling properties at full speed to meet the regulation requirements. Problems will only get worse if the company doesn't have access to refinance its debts. Therefore, Evergrande makes an ambitious 750 billions yuan contracted sales target and according to the management team, everything runs well until the outbreak of another wave of covid-19 in July and some of its lenders puts more pressure on it in the same month, before suppliers lose both patience and confidence in the company and refuse to continue properties construction. As a result, although Evergrande's ASP is at near 7000 yuan per sqm in August, 57% lower than its peers average of 16681 yuan per sqm, its GFA and sales data still crunched about 47% in August to 38 bilions yuan of sales from 71 billions in June, making its margin look disappointed. The latest prediction of Evergrande's september sales is only 5.3 billion. If this turns out to be true, it means that Evergrande only finished 59% of its sales target after three quarters' efforts. Under such circumstances, it's not hard to imagine that investors dash to sell off every Evergrande financial instruments they own.
+
+Evergrande sales target and completion rate YTD:
+
+```{r,fig.width=10,echo=FALSE}
+library(scales)
+plan_and_percent <- read_csv(here::here("data", "plan and percent.csv")) %>% 
+  janitor::clean_names()
+plan_and_percent %>% ggplot(aes(x=as.Date.character(date),y=as.numeric(contracted_sales_target)))+geom_line()+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Evergrande contracted sales target",
+       x="Date",y="",color="")+scale_x_date(date_labels = "%Y")
+
+plan_and_percent %>% ggplot(aes(x=as.Date.character(date_2021),y=as.numeric(target_completed)*100))+geom_line()+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Evergrande contracted sales target completion rate",
+       x="Date",y="",color="")+scale_x_date(date_labels = "%m/%Y")+
+  scale_y_continuous(breaks = c(0,30,60,90),labels = function(x) paste0(x,"%"),limits=c(0,90))+geom_text(aes(label=percent(as.numeric(target_completed))),nudge_y = 2.5,nudge_x = 1)
+```
+
+Evergrande and peers' ASP :
+
+```{r,fig.width=10,echo=FALSE}
+ASM_analysis <- read_csv(here::here("data", "ASM analysis.csv")) %>% 
+  janitor::clean_names()
+ASM_analysis %>% pivot_longer(cols=2:5,names_to = "ASM",values_to = "value") %>% mutate(Label = ifelse(date == "2021/8/31", ASM, NA)) %>% 
+  ggplot(aes(x=as.Date.character(date),y=value,color=ASM))+geom_line()+
+  scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Evergrande ASP and its peers",
+       x="Date",y="",color="")
+```
+
+Evergrande and peers' sales performance YTD:
+
+```{r,fig.width=10,echo=FALSE}
+sales_volumn <- read_csv(here::here("data", "sales and volumn.csv")) %>% 
+  janitor::clean_names()
+sales_volumn %>% pivot_longer(cols=2:4,names_to = "sales",values_to = "value") %>% mutate(Label = ifelse(date == "2021/8/31", sales, NA)) %>% 
+  ggplot(aes(x=as.Date.character(date),y=value,color=sales))+geom_line()+
+  scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Evergrande sales and its peers",
+       x="Date",y="",color="")+scale_color_manual(labels = c("country garden","evergrande","vanke"), values = c("blue", "red","green"))
+```
+
+Evergrande is not the only developer who tries to sell fast, nearly all companies in the real estate sector are promoting remarkable sales volume as no one would know what would be included in the policy changes few months later. Every enterprise has to get more cash back onshore like what banks do when there is too much uncertainty and risks. The most active sales partners are private firms because generally they have a higher leverage ratio than state-owned developers, whole-industry property inventory shrink to record low and this could be proved by the surge of property ready to sale YoY growth rate and total sales YoY growth rate. However, new construction YoY and government land sales YoY growth rate is gloomy, representing pessimistic expectations for future business of developers. This is huge since the income comes from land transferring makes up the largest part of budgetary revenue of government-managed fund, which is more important for the local government because they don't have a say on the taxation. With so many hidden liabilities in the form of city investment bonds, local regions without strong economy growth would have difficulty paying debts and spending on citizens' livelihood.
+
+```{r,fig.width=10,echo=FALSE}
+sales_pushing <- read_csv(here::here("data", "sales pushing.csv")) %>% 
+  janitor::clean_names()
+sales_pushing %>% pivot_longer(cols=2:3,names_to = "factor",values_to = "value") %>% ggplot(aes(x=as.Date.character(date),y=value*100,color=factor))+geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Real estate developers big sales",
+       x="Date",y="",color="")+scale_color_manual(labels = c("ready_to_sale_yoy","total_sales_yoy"), values = c("blue", "red"))+
+  scale_y_continuous(breaks = c(-40,-20,0,20,40),labels = function(x) paste0(x,"%"),limits=c(-40,30))
+```
+
+Lands transferring income and new properties construction volume have all fallen into the negative range:
+
+```{r,fig.width=10,echo=FALSE}
+investment_credit
+investment_credit %>% pivot_longer(cols=4:5,names_to = "factor",values_to = "value") %>% select(date,factor,value) %>% ggplot(aes(x=as.Date.character(date),y=as.numeric(value)*100,color=factor))+geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Decreasing demand from developers",
+       x="Date",y="",color="")+scale_color_manual(labels = c("land_transfer_yoy","new_construction_yoy"), values = c("blue", "red"))+
+  scale_y_continuous(breaks = c(-20,0,20,40,60),labels = function(x) paste0(x,"%"))
+```
+
+
+Poor sales and low prices combined hinder Evergrande's efforts on bringing cash back into its balance sheet, aggravated by increasing construction costs and affiliated SG&A expenses considering the fact that more money will be spent on marketing sales discount. Hence, the margin nearly halves from last report's figure and hits an all-time low since its IPO with gross margin of 12.95 percent and only 2.29 percent of its developing business operation margin.
+
+```{r,fig.width=10,echo=FALSE}
+margin <- read_csv(here::here("data", "margin.csv")) %>% 
+  janitor::clean_names()
+margin %>% pivot_longer(cols=2:3,names_to = "factor",values_to = "value") %>% ggplot(aes(x=as.Date.character(date),y=value,color=factor))+geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Revenue and cost psm",
+       x="Date",y="",color="")+scale_color_manual(labels = c("contracted asp","land bank cost"), values = c("blue", "red"))
+
+margin %>% pivot_longer(cols=4:5,names_to = "factor",values_to = "value") %>% ggplot(aes(x=as.Date.character(date),y=value,color=factor))+geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Gross margin and operating margin of development business",
+       x="Date",y="",color="")+scale_color_manual(labels = c("gross margin","operating margin"), values = c("blue", "red"))+
+  scale_y_continuous(breaks = c(0,20,40),labels = function(x) paste0(x,"%"),limits=c(0,40))
+```
+
+## Too big to fail? 
+
+All these financial disadvantages force Evergrande fail to honor its interest payments responsibility even after it managed to repay principle and interest of all US-dollar dominated bonds matured in this year. This is not the first time Evergrande has caught market's attention. Back in September last year, a letter from Evergrande to the guangdong provincial government was leaked to the public showing that the company was in desperate and needed assistance. At that time, some experts interpreted this letter as Evergrande's strategy to persuade the government to open green light on its restructuring plan with Shenzhen Special Economic Zone Real Estate & Properties, which has already listed on the China A-stock market. However, the restructuring plan was aborted in the end after more than 1500 days of anxiety and frustration, and Evergrande lost its best opportunity to get a considerable amount of external refund after losing access to the credit market because of the failure of meeting any three red line metrics. According to the statistics provided by the bloomberg, Evergrande still had 669 million dollars of interests required to be paid before the end of this year. It's not an unreachable number considering Evergrande still has 153 billions yuan of cash equivalent on its balance sheet and has raised 14.3 billions yuan through asset disposal. However, the real problem is that Evergrande has an enormous amount of net debt which means the due date will just come consecutively and it has more liabilities to its suppliers and contractors.
+
+Evergrande net debt is significantly higher than two large renowned developers:
+
+```{r,fig.width=10,echo=FALSE}
+net_debt <- read_csv(here::here("data", "net debt.csv")) %>% 
+  janitor::clean_names()
+net_debt %>% pivot_longer(cols=2:4,names_to = "net_debt",values_to = "value") %>% mutate(Label = ifelse(date == "2020/12/31", net_debt, NA)) %>% 
+  ggplot(aes(x=date,y=value,color=net_debt,label=Label))+
+  geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Evergrande and its peers' net debt",
+       x="Date",y="",color="")
+```
+
+However, it's cash and cash equivalents situation is the poorest among three;
+
+```{r,fig.width=10,echo=FALSE}
+net_debt %>% pivot_longer(cols=5:7,names_to = "cash",values_to = "value") %>% mutate(Label = ifelse(date == "2020/12/31", cash, NA)) %>% 
+  ggplot(aes(x=date,y=value,color=cash,label=Label))+
+  geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Evergrande and its peers' cash and cash equivalents",
+       x="Date",y="",color="")
+```
+
+Although Evergrande's total net debt number is steadily declining, from 538 billions at the end of last year to around 400 billions in the first half of 2021, the sum liabilities don't decrease as Evergrande accumulates vast payables to its suppliers and contractors while it uses credit saved from it to pay back its debt. Trade payables and other accruals on its balance sheet have increased more than 14% in a half a year's time to an aggregated 951 billions yuan, and Evergrande has only resolved about 25 billions payables with suppliers through selling its properties and parking spaces.
+
+```{r,fig.width=10,echo=FALSE}
+debt_structure <- read_csv(here::here("data", "debt structure.csv")) %>% 
+  janitor::clean_names()
+debt_structure %>% pivot_longer(cols=2:4,names_to = "factor",values_to = "value") %>% 
+  ggplot(aes(x=as.Date.character(date),y=value,color=factor))+
+  geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Evergrande major liability structure",
+       x="Date",y="",color="")
+```
+
+In fact, Evergrande has sold not only its properties but also equity of several subsidiaries it owns at last year and this year. Besides, it has also secured ample funds from two IPOs of its EV and property service units. According to figures provided in its mid-term report, Evergrande has raised about 14.3 billions yuan by selling stakes in business including HengTen Networks, Shengjing Bank and Evergrande Spring in the first half of year and news reported that Evergrande planned to raise 10 more billions yuan in the second half from selling its shares in the life insurance company, shengjing bank and some properties in Hong Kong. This could be seen from a sharp increase in the subject of other financing activities in the cash flow statement, which jumps from 38 billions yuan in 2019 to 56 billions yuan in 2020, offsetting the impact of a vast number of debts and the lack of new finance resources. Meanwhile, this could also be observed from the subject of other income, which climbs from 1 billion yuan at the end of 2020 to 22 billions just in 21H1. 
+
+Evergrande cash from debt subject typically rebounded cyclically every two to three periods but had recorded two largest consecutive setbacks in recent years with the net outflow surpassing 120 billions yuan in 2021H1, demonstrating how stressful Evergrande is especially when it is haunted by the influence of tightening credit policy. Moreover, the problems could possibly only be a tip of the iceberg as Evergrande could cover its operation losses through the manipulation of the capitalization of interests subject before utilizing that counteraction effect into properties under development subject to reduce its net financing costs while consolidating assets. Net financing cost of the first half was at three years low of merely 4.1 billions and a large part is owing to 31 billions interests capitalization counterbalance. 
+
+What's more, annual depreciation of properties under development subject is extremely small compared with the size of annual interests capitalization. For example, in Evergrande's 2020 annual report, only around 0.7 billion yuan of depreciation has been calculated into its sales costs while 69 billion yuan has been counted as interests capitalization. Much more conveniently, a decent share of investment property subject is transferred from properties under development as well, and it often reports a net gain rather than a net loss of its fair value, giving an extra enhancement of the total asset size. For instance, in 2020 it recorded a 1.2 billion net gain. By conducting these adjustments, Evergrande could increase the volume of its asset and equity by carrying out some favourable adjustments, creating perfect conditions for them to lower the level of liabilities to asset ratio and net debt to euqity ratio. However, this convenience could no longer exist given the current situation where the fair value of Evergrande's investment property will certainly decrease due to the liquidity problem and real estate sector risk-off momentum, and so do the equity it holds in subsidiary like the EV unit, the value of which has plunged three quarters from its highest. These mean that Evergrande's margin pressure and its cash flow situation could get worsen if no easing from central government on the credit policy. Therefore, the longer bad news surrounding Evergrande persist, the more impossible could Evergrande solve its debt problem on itself by huge asset disposals and discounted sales.
+
+```{r,fig.width=10,echo=FALSE}
+asset_disposal <- read_csv(here::here("data", "asset disposal.csv")) %>% 
+  janitor::clean_names()
+asset_disposal %>% pivot_longer(cols=2:3,names_to = "factor",values_to = "value") %>% mutate(date=as.Date.character(date)) %>% ggplot(aes(x=date,y=value,color=factor))+
+  geom_line()+scale_x_date(date_labels = "%m/%Y")+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Debt pressure forces Evergrande to speed asset disposal",
+       x="Date",y="",color="")
+```
+
+## Conclusions
+
+Looking back into Evergrande's story, there are three more things I would like to elaborate. The first one is Evergrande's strategy mistakes back in 2017. At the end of year 2016, the state government used the phrases "housing is for living in and not speculation” in its annual report for the very first time. Taking city Beijing as an example, six years before that time, which means year 2010 to 2016, the average housing price for the city increased more than 130% from 25000 yuan/sqm in 2010 to 57597 yuan/sqm in 2016. In the same period, real estate investment has also risen from 4826.7 billions yuan to 10258.1 billions, representing a 113% growth. 
+
+Therefore, at that time, it seems that the top management team realized that by letting real estate industry sector grow in this way, the country was merely replicating the destined tragedy as Japan asset price bubble crisis back in 1986 and the latest us subprime mortgage crisis in 2008. That's why it implemented a variety of tense policy in the following years including squeezing trust and entrusted loans and requiring new asset management rules. However, if you take a look at what happened to the real estate investment years after 2017, it bounced back quickly after the market and developers absorbed initial shocks because the latter always could figure out ways of expanding their balance sheets and banks are willing to lend to these companies given the continuous rising housing price and the lucrative return. Moreover, growth was sluggish and the government tended to ease credit policy towards the real estate sector as it was the simplest way to boost the economy. 
+
+Evergrande was one of the developers who dared to run at the front by acquiring 126 millions sqm of lands in 2017, the highest number in its whole time transaction history in the year when the state government and media vocalized their concerns on the fast growing housing market. It also bought 102 millions sqm lands in 2016 thus doubled company's land banking inventory in just two years from 156 millions sqm at the end of 2015 to 312 millions sqm later. 312 millions sqm was also the peak of company's land banking in all time. More deadly, most of those lands had been bought from tier 3 and 4 cities because although Evergrande had stopped publishing its new acquisition distribution figure from year 2017, we could judge from the fact that since inventory percentages between 2016 and 2017 were near the same for two tiers groups even when the calculation rules had been changed from projects under development share to the net value share. In other words, by applying net value calculation rule, tier 1 and 2 cities would have a far larger percentage than 56.7% given by the Evergrande in 2016 by projects under development rule as land price in tier 3 and 4 cities at that time was significantly lower than that in tier 1 and 2. Therefore, Evergrande must had bought a large quantity of lands in tier 3 and 4 cities to make up its percentage in 2017. This is also a good example of showing how Evergrande had adjusted its reporting methods to conceal something it doesn't want to show. One more remarkable thing, according to Evergrande mid-term report this year, the company only acquired 7.71 millions sqm in land purchasing, a nearly 90% slump from 68.92 millions in 2020, proving how nervous was the company cash flow status.
+
+The reasons behind developers invested in tier 3 and 4 cities are based on short-term demand, not long-term reality. In the long term, real estate industry is built on the population migration picture and servicing and consuming business's prosperity, not the short term speculation opportunity when citizens in tier 3 and 4 cities suddenly had money to spend from government's demolition compensation. Hence, these citizens are more sensitive to changes of loan rate and policy thus reducing the demand for new properties abruptly. This could be supported by the figures regarding the inventory depletion cycle in tier 3 and 4 cities. Depletion time started to rise from August 2020 when the government announced its new three red lines policy from around 7.7 months to 14.7 months in August 2021, suggesting a 88.9% YoY increase rate. Inventory volume also rose to 14.42 millions sqm in this August. Longer depletion time in turn hurts Evergrande property sales in these cities thus hindering their efforts to get the cash back. Eventually, Evergrande paid for the price of its complacent strategy in tier 3 and 4 cities back in 2017.
+
+Summary of Evergrande land banking history from year 2013-2021H1:
+
+```{r,echo=FALSE,fig.width=10}
+land_purchase<-tibble(year=c("2013","2014","2015","2016","2017","2018","2019","2020","2021H1"),
+                      new_land_purchase=c(26.85,8.41,34.85,102.4,126.00,49.93,67.03,68.92,7.71),
+                        land_bank_inventory=c(151,147,156,229,312,303,293,231,214),
+                        first_two_tiers=c(0.454,0.469,0.547,0.567,0.58,0.66,0.67,0.67,0.695)
+)
+library(knitr)
+library(kableExtra)
+land_purchase<-mutate(land_purchase,third_fourth_tiers=1-first_two_tiers,year=factor(year,ordered = TRUE))
+kable(land_purchase,align = 'ccccc') %>% kable_styling(full_width = F,bootstrap_options = "hover", font_size = 15)
+```
+
+Evergrande land purchases transactions from year 2013 :
+
+```{r,echo=FALSE,fig.width=10}
+ggplot(data=land_purchase,mapping=aes(x=year,y=new_land_purchase))+geom_line(aes(group=1))+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Evergrande topped its land purchases in year 2017",
+       x="Year",y="New land purchased (in millions)")+geom_text(aes(label=new_land_purchase),size=4,nudge_x = -0.2,nudge_y = 1.2)
+```
+
+Evergrande land banking tiers distribution from year 2013 (projects under development rules before 2016, net value rules after 2017):
+
+```{r,echo=FALSE,fig.width=10}
+library(scales)
+land_purchase %>% pivot_longer(cols=4:5,names_to = "tiers",values_to = "percent") %>% ggplot(aes(x=year,y=percent*100,fill=tiers))+geom_col(position = "dodge",width=0.5)+
+  scale_y_continuous(breaks = c(0,40,80),limits=c(0,80),labels = function(x) paste0(x,"%"))+theme_bw()+
+  theme(plot.title=element_text(hjust=0.5,size=15,face="bold"),axis.text =element_text(size=10),axis.title = element_text(size=10),legend.text = element_text(size=10),legend.title = element_text(size=10),legend.position = "bottom")+
+  labs(title="Evergrande land banking tiers distribution",
+       x="Year",y="New land purchased (in millions)",fill="")
+```
+
+The second thing worth to be mentioned is the government policy. Since contents of policy changes and impacts have been discussed above, here I build a DID (Difference in difference) model to quantify how the implementation of three red lines policy affects the yield spread of real estate industry Yuan dominated bonds. The data was collected from bloomberg and I chose BVAL g-spread as the dependent variable as I could only analyze the policy impacts between treated and untreated group based on the same reference element. I collected BVAL g-spread in both November 2020 and March 2021 to divide time period because the three red line policy was officially implemented in January 2021. Besides, I also collected 24 transportation companies as the untreated group and 103 real estate companies as the treated group, all of these bonds will mature in year 2023 and I had also filtered out the outliers. 
+
+The tidy results of coefficients are presented in the table below. As you could see, the implementation of three red line policy is significant at 5% and causes an increase of the average g-spread of real estate industry bonds matured in 2023 by 20 basis points, demonstrating the fact that the policy created a risk premium in this sector. So far, most developers that have satisfied all three red lines requirements are state owned like CR Land, Jinmao and Poly. Highly leveraged private developers including greenland, guangzhou r&f and country garden are all facing similar liquidity issues as Evergrande did, some of them even have more severe problems than Evergrande like guangzhou r&f's 25% cash coverage rate. Since most banks and financial institutions are owned by the state, theoretically the probability of contagion risks is low because the state government could ask banks to provide liquidity assistance to unhealthy developers and endure their risks exposure to them for longer time. But the damage has already been inflicited and performances among developers would diverge further based on their post strategy and credit conditions. A long path of recovery, restructuring and normalization just begin. Too many stakeholders will get involved in this process and it's difficult to predict how this would come to an end because many of them have the capability to influence the whole picture. Scenarios will vary but the worst one is unlikely to appear.
+
+```{r,echo=FALSE}
+library(plm)
+library(lmtest)
+did_model <- read_csv(here::here("data", "did.csv")) %>% 
+  janitor::clean_names()
+did_model_new<-did_model %>% pivot_longer(cols=1:2,names_to ="spread",values_to ="value" )
+did_model_new<-did_model_new %>% mutate(industry=factor(industry,
+                                         labels = c("real estate","transportation")
+                                         ),
+                                        time=ifelse(spread=="g_spread_nov","November","March"))%>% 
+  mutate(time_after=ifelse(time == "March", 1, 0),
+        policy_treated=ifelse(industry == "real estate", 1, 0)) 
+panel <- pdata.frame(did_model_new, "key")
+did.reg <- plm(value ~ time_after + policy_treated + time_after:policy_treated, 
+               data = panel)
+kable(coeftest(did.reg, vcov = function(x) 
+  vcovHC(x, cluster = "group", type = "HC1")) %>% tidy(),align = 'ccccc') %>% kable_styling(full_width = F,bootstrap_options = "hover", font_size = 15)
+```
+
+At last, investors shouldn't forget that Evergrande is still trying to save themselves at all costs. Since sales have plummeted remarkably because of negative news about the construction, the only way left for the management team to honor its coupon responsibility is by selling their assets. Till now, Evergrande had missed two coupon payments of its US-dollar dominated bonds with a combined total of 131 millions dollars. About another 1.5 billion dollars have been cashed from another sell of 20% stake at the Shengjing Bank to a state-owned company but these funds are unlikely to be given to foreign investors as reports claimed that Evergrande in fact owes 7 billions yuan to Shengjing Bank and the money it raised from this transaction will mainly be used to repay the bank. State government was also putting a lot of pressure on Evergrande by requiring the company to avoid default while ensuring its priority is to deliver property projects. Evergrande has 155 billions yuan worth of investment property on its balance sheet and it is planning to sell properties in owns in Hong Kong for another 20 billions yuan. Evergrande still has 669 millions dollars worth of coupon left to be paid in this year. Given its sales nightmare, rotten margin and tasks with different level of priority, it couldn't be possible for it to solve all these out by itself without the assistance from the state government. PBOC has provided a substantial amount of liquidity to ease the market before the golden week and investors are waiting to see whether the state would to buy assets from the Evergrande.
